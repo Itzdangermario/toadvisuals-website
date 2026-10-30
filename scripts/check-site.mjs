@@ -65,4 +65,32 @@ for (const p of pages) {
 
 console.log(`\n${pages.length} pages checked, ${errors} problem(s).`);
 console.log(`External links (open them once by hand):\n  ${[...external].sort().join('\n  ')}`);
-process.exit(errors ? 1 : 0);
+if (errors) process.exitCode = 1;
+
+// _headers must never turn a page into a file download (Cloudflare applies "/downloads/*" to "/downloads/" too).
+{
+  const hp = join(dist, '_headers');
+  let bad = 0;
+  if (existsSync(hp)) {
+    let rule = null;
+    const rules = [];
+    for (const line of readFileSync(hp, 'utf8').split('\n')) {
+      if (!line.trim() || line.trim().startsWith('#')) continue;
+      if (!/^\s/.test(line)) rules.push((rule = { path: line.trim(), headers: [] }));
+      else if (rule) rule.headers.push(line.trim().toLowerCase());
+    }
+    const routes = pages.map((p) => '/' + relative(dist, p).replace(/\\/g, '/').replace(/index\.html$/, ''));
+    for (const r of rules) {
+      const re = new RegExp('^' + r.path.replace(/[.+?^${}()|[\]\\]/g, '\\$&').replace(/\*/g, '.*') + '$');
+      const harmful = r.headers.some((h) => h.startsWith('content-disposition') || (h.startsWith('content-type') && !h.includes('text/html')));
+      for (const route of routes) {
+        if (harmful && re.test(route)) {
+          console.error(`_headers: rule "${r.path}" would make the page ${route} download as a file`);
+          bad++;
+        }
+      }
+    }
+  }
+  console.log(`_headers checked, ${bad} problem(s).`);
+  if (bad) process.exitCode = 1;
+}
