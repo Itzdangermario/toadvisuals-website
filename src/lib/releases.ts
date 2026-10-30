@@ -108,7 +108,15 @@ function collect(): Release[] {
       if (!statSync(dir).isDirectory() || !/^\d+(\.\d+)*$/.test(version)) continue;
       for (const name of readdirSync(dir)) {
         if (!name.toLowerCase().endsWith('.jar')) continue;
-        byVersion.set(version, [...(byVersion.get(version) ?? []), localFile(version, name)]);
+        const file = localFile(version, name);
+        const twin = (byVersion.get(version) ?? []).find((f) => f.mc === file.mc);
+        if (twin) {
+          throw new Error(
+            `public/downloads/${version}/ has two files for Minecraft ${file.mc}: ${twin.name} and ${name}. ` +
+              'Keep only one per Minecraft version (delete the old one).',
+          );
+        }
+        byVersion.set(version, [...(byVersion.get(version) ?? []), file]);
       }
     }
   }

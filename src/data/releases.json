@@ -1,5 +1,5 @@
 {
-  "_comment": "Minecraft versions the mod supports. Downloads are found automatically in public/downloads/<version>/ (see README). Files hosted somewhere else (e.g. Dropbox, too big for Cloudflare Pages) go into 'external'; use the direct download link (Dropbox: dl=1). 'bytes' and 'sha256' are optional.",
+  "_comment": "Minecraft versions the mod supports. Downloads are found automatically: put the jars into public/downloads/<version>/ (see README). Only the newest version folder is offered. 'external' is only for files hosted somewhere else; leave it empty to use the folder.",
   "targets": {
     "1.21.11": {
       "java": 21,
@@ -12,18 +12,5 @@
       "fabricApi": "Fabric API for 26.2"
     }
   },
-  "external": [
-    {
-      "version": "1.8.5",
-      "mc": "1.21.11",
-      "name": "toads-visuals-1.8.5-1.21.11.jar",
-      "url": "https://www.dropbox.com/scl/fi/ba8h3m4bt4210c9aqhpx2/toads-visuals-1.8.5-1.21.11.jar?rlkey=e8q0x688mvd63p057gwcwulvk&st=4xuwm3ax&dl=1"
-    },
-    {
-      "version": "1.8.5",
-      "mc": "26.2",
-      "name": "toads-visuals-1.8.5-26.2.jar",
-      "url": "https://www.dropbox.com/scl/fi/plbjxvsm7ilm9kuc0gknc/toads-visuals-1.8.5-26.2.jar?rlkey=u8egsfnhnml6e5rx8mww08hgq&st=14nb99mx&dl=1"
-    }
-  ]
+  "external": []
 }

@@ -23,29 +23,18 @@ Hosting: Cloudflare Pages.
 ## Upload a new mod version
 
 1. Make a folder with the version number: `public/downloads/1.8.6/`
-2. Put the jar files in it. The Minecraft version must be in the file name, e.g.
-   `ToadsVisuals-1.8.6-mc1.21.11.jar` and `ToadsVisuals-1.8.6-mc26.2.jar` (or `toads-visuals-1.8.6+26.2.jar`).
+2. Put the two jar files in it, one per Minecraft version. The Minecraft version must be in the file name, e.g.
+   `ToadsVisuals-1.8.6+1.21.11.jar` and `ToadsVisuals-1.8.6+26.2.jar` (or `…-mc1.21.11.jar`).
+   Only one file per Minecraft version – the build stops with a clear message if there are two.
 3. Copy the mod's `changelog.json` to `src/data/changelog.json` (for the date and the notes).
-4. `npm run build && npm run check-links`, then push – done. The newest folder automatically becomes "Latest",
-   `/latest/1.21.11` and `/latest/26.2` point to it, file size and SHA-256 are calculated by the build.
+4. `npm run build && npm run check-links`, then push – done. Only the newest folder is offered; the download button
+   downloads the file directly. File size and SHA-256 are calculated by the build, `/latest/1.21.11` and
+   `/latest/26.2` point to the newest files, and old versions are removed from the built site automatically.
+
+To replace the files of a version (e.g. 1.8.5), delete the old jars in `public/downloads/1.8.5/` and put the new ones in.
 
 **Cloudflare Pages only serves files up to 25 MB.** The build stops with a clear message if a jar is bigger.
-Files hosted somewhere else (Dropbox, GitHub Releases …) are listed in `src/data/releases.json` instead.
-Version 1.8.5 is set up like this right now. For a new version, replace the two entries:
-
-```json
-"external": [
-  { "version": "1.8.6", "mc": "1.21.11", "name": "toads-visuals-1.8.6-1.21.11.jar",
-    "url": "https://www.dropbox.com/scl/fi/…/toads-visuals-1.8.6-1.21.11.jar?rlkey=…&dl=1" }
-]
-```
-
-With Dropbox, change `dl=0` at the end of the share link to `dl=1` – then the click downloads the file directly instead
-of opening the Dropbox page. `"bytes"` (file size) and `"sha256"` are optional; without them the size is simply not shown.
-Only the newest version is offered: when you add a new one, remove the old entries.
-As long as `"external"` has entries, jars in `public/downloads/` are ignored completely, and the build
-(`scripts/clean-dist.mjs`) removes every mod file from `dist/` that the site does not offer – old versions can't be
-downloaded from the live site, even if they are still lying in the folder.
+Files hosted somewhere else can be listed in `src/data/releases.json` → `"external"` (then the folder is ignored).
 
 **Preinstalled texture packs:** only publish builds with packs you made yourself or that the authors allowed you to
 share. Texture packs are protected by copyright; a pack without an explicit permission or licence may not be
