@@ -13,7 +13,3 @@
 /img/*
   Cache-Control: public, max-age=604800
 
-/downloads/*
-  Content-Type: application/java-archive
-  Content-Disposition: attachment
-  Cache-Control: public, max-age=86400
