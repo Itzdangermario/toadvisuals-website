@@ -1,0 +1,34 @@
+---
+import Base from '../layouts/Base.astro';
+import Icon from '../components/Icon.astro';
+import Playground from '../components/Playground.astro';
+import { latest } from '../lib/releases';
+---
+<Base title="Try it" description="Try Toad's Visuals in your browser: kill effects, crosshair editor, glint styles, block outline, hit colour and PvP HUD.">
+  <section class="page-hero">
+    <div class="glow" aria-hidden="true"></div>
+    <div class="wrap">
+      <h1>Try it in your browser</h1>
+      <p class="lead">Play with the Extras of Toad's Visuals before you install it. Pick an effect, change colours, move the sliders.</p>
+    </div>
+  </section>
+  <div class="wrap body">
+    <Playground />
+    <div class="next">
+      <a class="btn btn-primary btn-lg" href="/downloads/"><Icon name="download" size={20} /> Download {latest.version}</a>
+      <a class="btn btn-ghost btn-lg" href="/features/">All features</a>
+    </div>
+  </div>
+</Base>
+
+<style>
+  .body {
+    padding-bottom: clamp(64px, 9vw, 120px);
+  }
+  .next {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 32px;
+  }
+</style>

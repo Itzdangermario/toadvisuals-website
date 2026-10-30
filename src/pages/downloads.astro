@@ -1,0 +1,362 @@
+---
+import Base from '../layouts/Base.astro';
+import Icon from '../components/Icon.astro';
+import { releases, latest, formatDate } from '../lib/releases';
+import { site } from '../data/site';
+import LiveStats from '../components/LiveStats.astro';
+---
+<Base
+  title="Downloads"
+  description={`Download Toad's Visuals ${latest.version} for Minecraft ${latest.files.map((f) => f.mc).join(' and ')} (Fabric). File sizes and checksums.`}
+>
+  <section class="page-hero">
+    <div class="glow" aria-hidden="true"></div>
+    <div class="wrap">
+      <h1>Downloads</h1>
+      <p class="lead">
+        Pick the file for your Minecraft version. Toad’s Visuals runs on Fabric and needs the Fabric API.
+      </p>
+      <div class="hero-stats"><LiveStats compact /></div>
+    </div>
+  </section>
+
+  <section class="wrap latest" id="latest" aria-labelledby="latest-title">
+    <div class="latest-head">
+      <h2 id="latest-title">Version {latest.version}</h2>
+      <span class="chip chip-new">Latest</span>
+      <span class="muted">{formatDate(latest.date)}</span>
+      <a class="notes" href={`/changelog/#v${latest.version}`}>What’s new</a>
+    </div>
+    {latest.title && <p class="lead title">{latest.title}</p>}
+
+    <div class="files">
+      {
+        latest.files.map((f) => (
+          <article class="file glass" aria-labelledby={`file-${f.mc}`}>
+            <div class="file-top">
+              <div>
+                <h3 id={`file-${f.mc}`}>Minecraft {f.mc}</h3>
+                <p class="muted mono name">{f.name}</p>
+              </div>
+              <a class="btn btn-primary btn-lg" href={f.href} download={f.external ? undefined : f.name} data-dl-version={latest.version} data-dl-mc={f.mc} aria-label={`Download Toad's Visuals ${latest.version} for Minecraft ${f.mc}${f.size ? ` (${f.size})` : ''}`}>
+                <Icon name="download" size={22} />
+                Download
+              </a>
+            </div>
+            <dl class="specs">
+              {f.size && (
+                <div>
+                  <dt>File size</dt>
+                  <dd>{f.size}</dd>
+                </div>
+              )}
+              <div>
+                <dt>Java</dt>
+                <dd>{f.java} or newer</dd>
+              </div>
+              <div>
+                <dt>Fabric Loader</dt>
+                <dd>{f.loader} or newer</dd>
+              </div>
+              <div>
+                <dt>Also needs</dt>
+                <dd>{f.fabricApi}</dd>
+              </div>
+            </dl>
+            {f.sha256 && <div class="hash">
+              <span>SHA-256</span>
+              <code class="mono" data-hash>{f.sha256}</code>
+              <button class="copy" type="button" data-copy={f.sha256} aria-label={`Copy SHA-256 checksum for Minecraft ${f.mc}`}>
+                <Icon name="copy" size={16} />
+                <span data-copy-label>Copy</span>
+              </button>
+            </div>}
+          </article>
+        ))
+      }
+    </div>
+
+    <div class="needs">
+      <h3>You also need</h3>
+      <ul>
+        <li>
+          <a href={site.links.fabricInstaller} target="_blank" rel="noopener">Fabric Loader <Icon name="external" size={15} /></a>
+          <span class="muted">installs Fabric for your Minecraft version</span>
+        </li>
+        <li>
+          <a href={site.links.fabricApi} target="_blank" rel="noopener">Fabric API <Icon name="external" size={15} /></a>
+          <span class="muted">goes into the mods folder next to Toad’s Visuals</span>
+        </li>
+        <li>
+          <a href={site.links.skyboxify} target="_blank" rel="noopener">Skyboxify <Icon name="external" size={15} /></a>
+          <span class="muted">optional, only for the sky editor</span>
+        </li>
+        <li>
+          <a href={site.links.modMenu} target="_blank" rel="noopener">Mod Menu <Icon name="external" size={15} /></a>
+          <span class="muted">optional, adds the mod to the mods list</span>
+        </li>
+      </ul>
+      <p class="muted">New to mods? Follow the <a href="/faq/#install">installation guide</a>.</p>
+    </div>
+  </section>
+
+</Base>
+
+<script>
+  document.querySelectorAll<HTMLButtonElement>('[data-copy]').forEach((btn) => {
+    btn.addEventListener('click', async () => {
+      const label = btn.querySelector('[data-copy-label]');
+      try {
+        await navigator.clipboard.writeText(btn.dataset.copy ?? '');
+        if (label) label.textContent = 'Copied';
+      } catch {
+        const code = btn.parentElement?.querySelector('[data-hash]');
+        if (code) window.getSelection()?.selectAllChildren(code);
+        if (label) label.textContent = 'Selected';
+      }
+      setTimeout(() => label && (label.textContent = 'Copy'), 1800);
+    });
+  });
+</script>
+
+<style>
+  .hero-stats {
+    margin-top: 26px;
+  }
+
+  .latest-head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 10px 16px;
+  }
+
+  .latest-head h2 {
+    font-size: var(--step-3);
+  }
+
+  .notes {
+    font-weight: 650;
+    margin-left: auto;
+    padding: 8px 0;
+  }
+
+  .title {
+    margin-top: 10px;
+  }
+
+  .files {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 18px;
+    margin-top: 32px;
+  }
+
+  .file {
+    min-width: 0;
+    padding: clamp(20px, 3vw, 30px);
+    display: grid;
+    gap: 22px;
+    align-content: start;
+  }
+
+  .file-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 18px;
+    flex-wrap: wrap;
+  }
+
+  .file h3 {
+    font-family: var(--font-display);
+    font-size: var(--step-2);
+    font-weight: 600;
+  }
+
+  .name {
+    margin-top: 4px;
+    font-size: 0.85rem;
+    overflow-wrap: anywhere;
+  }
+
+  .specs {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 14px 20px;
+    margin: 0;
+    padding-top: 20px;
+    border-top: 1px solid var(--line-soft);
+  }
+
+  .specs dt {
+    color: var(--faint);
+    font-size: 0.85rem;
+    font-weight: 600;
+  }
+
+  .specs dd {
+    margin: 2px 0 0;
+    font-weight: 700;
+  }
+
+  .hash {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    gap: 10px;
+    align-items: center;
+    font-size: 0.85rem;
+  }
+
+  .hash > span {
+    color: var(--faint);
+    font-weight: 650;
+  }
+
+  .hash code {
+    background: transparent;
+    border: 0;
+    padding: 0;
+    color: var(--muted);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .copy {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    min-height: 36px;
+    padding: 0 12px;
+    border-radius: 10px;
+    border: 1px solid var(--line);
+    background: rgba(243, 238, 250, 0.04);
+    color: var(--ink);
+    font: inherit;
+    font-weight: 650;
+    cursor: pointer;
+  }
+
+  .copy:hover {
+    border-color: rgba(199, 125, 255, 0.45);
+  }
+
+  .needs {
+    margin-top: 36px;
+    display: grid;
+    gap: 12px;
+  }
+
+  .needs ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 4px 28px;
+  }
+
+  .needs li {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2px 10px;
+    align-items: baseline;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--line-soft);
+  }
+
+  .needs li a {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-weight: 700;
+    min-height: 32px;
+  }
+
+  .previous h2 {
+    font-size: var(--step-2);
+  }
+
+  .intro {
+    margin: 10px 0 24px;
+    max-width: 60ch;
+  }
+
+  .table-wrap {
+    overflow-x: auto;
+    border: 1px solid var(--line);
+    border-radius: var(--r-panel);
+    background: var(--glass);
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 520px;
+  }
+
+  th,
+  td {
+    text-align: left;
+    padding: 6px 20px;
+    border-bottom: 1px solid var(--line-soft);
+    white-space: nowrap;
+  }
+
+  thead th {
+    font-size: 0.85rem;
+    color: var(--faint);
+    font-weight: 650;
+  }
+
+  tbody tr:last-child > * {
+    border-bottom: 0;
+  }
+
+  tbody th a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 40px;
+    min-width: 44px;
+    font-weight: 750;
+    color: var(--ink);
+    text-decoration: none;
+  }
+
+  tbody th a:hover {
+    color: var(--lilac);
+  }
+
+  .dl {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    min-height: 36px;
+    font-weight: 650;
+  }
+
+  @media (max-width: 860px) {
+    .files {
+      grid-template-columns: 1fr;
+    }
+    .needs ul {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .file-top .btn {
+      width: 100%;
+    }
+    .notes {
+      margin-left: 0;
+    }
+    .hash {
+      grid-template-columns: minmax(0, 1fr) auto;
+    }
+    .hash > span {
+      grid-column: 1 / -1;
+    }
+  }
+</style>

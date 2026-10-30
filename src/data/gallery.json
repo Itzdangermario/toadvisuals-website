@@ -1,0 +1,107 @@
+[
+  {
+    "file": "01-pvp-tab.webp",
+    "caption": "The PVP tab: every item category, with how many of your packs change it",
+    "alt": "Toad's Visuals screenshot: The PVP tab: every item category, with how many of your packs change it",
+    "home": true
+  },
+  {
+    "file": "02-swords.webp",
+    "caption": "Pick the netherite sword from any pack (shown with three example recolour packs)",
+    "alt": "Toad's Visuals screenshot: Pick the netherite sword from any pack (shown with three example recolour packs)",
+    "home": true
+  },
+  {
+    "file": "03-crystals.webp",
+    "caption": "End crystals side by side, choose one with a click",
+    "alt": "Toad's Visuals screenshot: End crystals side by side, choose one with a click"
+  },
+  {
+    "file": "04-totems.webp",
+    "caption": "Totem of Undying from a different pack than the rest",
+    "alt": "Toad's Visuals screenshot: Totem of Undying from a different pack than the rest"
+  },
+  {
+    "file": "05-armor.webp",
+    "caption": "Netherite armour, each piece from the pack you like",
+    "alt": "Toad's Visuals screenshot: Netherite armour, each piece from the pack you like"
+  },
+  {
+    "file": "06-effect-lightning.webp",
+    "caption": "Kill effect: Lightning",
+    "alt": "Toad's Visuals screenshot: Kill effect: Lightning",
+    "home": true
+  },
+  {
+    "file": "07-effect-shockwave.webp",
+    "caption": "Kill effect: Shockwave rings",
+    "alt": "Toad's Visuals screenshot: Kill effect: Shockwave rings"
+  },
+  {
+    "file": "08-effect-hearts.webp",
+    "caption": "Kill effect: Hearts",
+    "alt": "Toad's Visuals screenshot: Kill effect: Hearts",
+    "home": true
+  },
+  {
+    "file": "09-effect-souls.webp",
+    "caption": "Kill effect: Souls",
+    "alt": "Toad's Visuals screenshot: Kill effect: Souls"
+  },
+  {
+    "file": "10-effect-confetti.webp",
+    "caption": "Kill effect: Confetti",
+    "alt": "Toad's Visuals screenshot: Kill effect: Confetti"
+  },
+  {
+    "file": "11-effect-gravestone.webp",
+    "caption": "Kill effect: Gravestone with the name of who you beat",
+    "alt": "Toad's Visuals screenshot: Kill effect: Gravestone with the name of who you beat"
+  },
+  {
+    "file": "12-menu-kill-effects.webp",
+    "caption": "18 kill effects, your colour, your size",
+    "alt": "Toad's Visuals screenshot: 18 kill effects, your colour, your size"
+  },
+  {
+    "file": "13-menu-crosshair.webp",
+    "caption": "Crosshair editor with live preview",
+    "alt": "Toad's Visuals screenshot: Crosshair editor with live preview"
+  },
+  {
+    "file": "14-ingame-hud.webp",
+    "caption": "In game: PvP HUD, armour HUD and custom crosshair",
+    "alt": "Toad's Visuals screenshot: In game: PvP HUD, armour HUD and custom crosshair",
+    "home": true
+  },
+  {
+    "file": "15-menu-pvp-hud.webp",
+    "caption": "PvP HUD: count totems, crystals, gapples and pearls",
+    "alt": "Toad's Visuals screenshot: PvP HUD: count totems, crystals, gapples and pearls"
+  },
+  {
+    "file": "16-menu-glint.webp",
+    "caption": "Glint styles: tint, rainbow, waves, sparkle",
+    "alt": "Toad's Visuals screenshot: Glint styles: tint, rainbow, waves, sparkle"
+  },
+  {
+    "file": "17-menu-outline.webp",
+    "caption": "Block outline in any colour, with fill",
+    "alt": "Toad's Visuals screenshot: Block outline in any colour, with fill"
+  },
+  {
+    "file": "18-menu-sounds.webp",
+    "caption": "Sound editor for kills, hits, shield breaks and totem pops",
+    "alt": "Toad's Visuals screenshot: Sound editor for kills, hits, shield breaks and totem pops"
+  },
+  {
+    "file": "19-menu-customize.webp",
+    "caption": "Customize the menu itself: themes and fonts",
+    "alt": "Toad's Visuals screenshot: Customize the menu itself: themes and fonts"
+  },
+  {
+    "file": "20-nametag-logo.webp",
+    "caption": "Nametag logo for other Toad's Visuals players",
+    "alt": "Toad's Visuals screenshot: Nametag logo for other Toad's Visuals players"
+  }
+]

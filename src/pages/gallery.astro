@@ -1,0 +1,78 @@
+---
+import Base from '../layouts/Base.astro';
+import Icon from '../components/Icon.astro';
+import Lightbox from '../components/Lightbox.astro';
+import { gallery } from '../lib/gallery';
+---
+<Base title="Gallery" description="Screenshots of Toad's Visuals in Minecraft: the menu, kill effects, the PvP HUD, crosshair and more.">
+  <section class="page-hero">
+    <div class="glow" aria-hidden="true"></div>
+    <div class="wrap">
+      <h1>Gallery</h1>
+      <p class="lead">Screenshots taken in Minecraft with Toad's Visuals. Click a picture to see it large. The packs you see in the menu are simple example recolours made for these pictures; in your game it shows your own packs.</p>
+    </div>
+  </section>
+  <div class="wrap body">
+    {
+      gallery.length > 0 ? (
+        <ul class="grid">
+          {gallery.map((s, i) => (
+            <li>
+              <a href={s.src} data-lightbox="gallery" data-caption={s.caption}>
+                <img src={s.src} alt={s.alt} loading={i < 4 ? 'eager' : 'lazy'} decoding="async" width="1920" height="1080" />
+              </a>
+              <p>{s.caption}</p>
+            </li>
+          ))}
+        </ul>
+      ) : (
+        <p class="empty glass">
+          No screenshots yet. Meanwhile you can <a href="/try/">try the features in your browser</a>.
+        </p>
+      )
+    }
+    <a class="btn btn-primary btn-lg cta" href="/downloads/"><Icon name="download" size={20} /> Download Toad's Visuals</a>
+  </div>
+  <Lightbox />
+</Base>
+
+<style>
+  .body {
+    padding-bottom: clamp(64px, 9vw, 120px);
+  }
+  .grid {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 360px), 1fr));
+    gap: 22px 18px;
+  }
+  .grid a {
+    display: block;
+    border-radius: 14px;
+    overflow: hidden;
+    border: 1px solid var(--line);
+    background: #000;
+  }
+  .grid img {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
+    transition: transform 0.5s var(--ease);
+  }
+  .grid a:hover img {
+    transform: scale(1.03);
+  }
+  .grid p {
+    margin-top: 8px;
+    font-weight: 650;
+  }
+  .empty {
+    padding: 28px;
+  }
+  .cta {
+    margin-top: 40px;
+  }
+</style>

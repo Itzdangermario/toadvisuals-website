@@ -1,0 +1,138 @@
+---
+import { site } from '../data/site';
+import { latest } from '../lib/releases';
+const year = new Date().getFullYear();
+---
+<footer class="site-footer">
+  <div class="wrap grid">
+    <div class="about">
+      <a class="brand" href="/">
+        <img src="/img/toad-128.png" width="30" height="30" alt="" loading="lazy" />
+        <span>Toad's Visuals</span>
+      </a>
+      <p>
+        PvP visuals for Minecraft, made by {site.authors.join(' and ')}. Version {latest.version} for Fabric.
+      </p>
+    </div>
+
+    <nav aria-label="Website">
+      <h2>Website</h2>
+      <ul>
+        <li><a href="/features/">Features</a></li>
+        <li><a href="/try/">Try it</a></li>
+        <li><a href="/gallery/">Gallery</a></li>
+        <li><a href="/downloads/">Downloads</a></li>
+        <li><a href="/changelog/">Changelog</a></li>
+        <li><a href="/faq/">FAQ</a></li>
+        <li><a href="/community/">Community</a></li>
+      </ul>
+    </nav>
+
+    <nav aria-label="Community">
+      <h2>Community</h2>
+      <ul>
+        <li><a href={site.links.discord} rel="noopener" target="_blank">Discord</a></li>
+        {site.links.github && <li><a href={site.links.github} rel="noopener" target="_blank">GitHub</a></li>}
+        {site.links.modrinth && <li><a href={site.links.modrinth} rel="noopener" target="_blank">Modrinth</a></li>}
+      </ul>
+    </nav>
+
+    <nav aria-label="Legal">
+      <h2>Legal</h2>
+      <ul>
+        <li><a href="/privacy/">Privacy policy</a></li>
+        <li><a href="/imprint/">Imprint (Impressum)</a></li>
+      </ul>
+    </nav>
+  </div>
+
+  <div class="wrap fine">
+    <p>© {year} Toad's Visuals. All rights reserved.</p>
+    <p>
+      Not an official Minecraft product. Not approved by or associated with Mojang or Microsoft.
+    </p>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    border-top: 1px solid var(--line-soft);
+    background: linear-gradient(to bottom, transparent, rgba(167, 85, 255, 0.04));
+    padding-top: clamp(48px, 7vw, 72px);
+    margin-top: auto;
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: 1.6fr repeat(3, 1fr);
+    gap: 32px;
+  }
+
+  .brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    color: var(--ink);
+    text-decoration: none;
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 1.2rem;
+    min-height: 44px;
+  }
+
+  .about p {
+    color: var(--muted);
+    max-width: 30ch;
+    margin-top: 10px;
+    font-size: 0.97rem;
+  }
+
+  h2 {
+    font-family: var(--font-body);
+    font-size: 0.95rem;
+    font-weight: 750;
+    letter-spacing: 0;
+    color: var(--ink);
+    margin-bottom: 10px;
+  }
+
+  ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  li a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 40px;
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 0.97rem;
+  }
+
+  li a:hover {
+    color: var(--ink);
+  }
+
+  .fine {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 8px 24px;
+    padding-block: 28px 36px;
+    margin-top: 40px;
+    border-top: 1px solid var(--line-soft);
+    color: var(--faint);
+    font-size: 0.88rem;
+  }
+
+  @media (max-width: 760px) {
+    .grid {
+      grid-template-columns: 1fr 1fr;
+    }
+    .about {
+      grid-column: 1 / -1;
+    }
+  }
+</style>

@@ -1,0 +1,111 @@
+---
+/**
+ * Five real screenshots on the home page (nothing is shown while public/gallery/ is empty).
+ * Pictures marked "home": true in src/data/gallery.json are used first, the rest is filled up in gallery order.
+ */
+import { gallery } from '../lib/gallery';
+import Lightbox from './Lightbox.astro';
+const picked = gallery.filter((s) => s.home);
+const shots = [...picked, ...gallery.filter((s) => !s.home)].slice(0, 5);
+---
+{
+  shots.length > 0 && (
+    <section class="strip" aria-labelledby="shots-title">
+      <div class="wrap head">
+        <h2 id="shots-title">See it in game</h2>
+        <a href="/gallery/">All screenshots ({gallery.length})</a>
+      </div>
+      <ul class="wrap row">
+        {shots.map((s, i) => (
+          <li class:list={{ big: i === 0 }}>
+            <a href={s.src} data-lightbox="home" data-caption={s.caption}>
+              <img src={s.src} alt={s.alt} loading={i < 2 ? 'eager' : 'lazy'} decoding="async" width="1920" height="1080" />
+              <span>{s.caption}</span>
+            </a>
+          </li>
+        ))}
+      </ul>
+      <Lightbox />
+    </section>
+  )
+}
+
+<style>
+  .strip {
+    padding-block: clamp(24px, 4vw, 48px) clamp(56px, 8vw, 100px);
+  }
+  .head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 22px;
+  }
+  .head h2 {
+    font-size: var(--step-2);
+  }
+  .head a {
+    font-weight: 700;
+    min-height: 40px;
+    display: inline-flex;
+    align-items: center;
+  }
+  .row {
+    list-style: none;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    grid-auto-rows: 1fr;
+    gap: 12px;
+  }
+  .big {
+    grid-column: span 2;
+    grid-row: span 2;
+  }
+  .row a {
+    position: relative;
+    display: block;
+    height: 100%;
+    border-radius: 14px;
+    overflow: hidden;
+    border: 1px solid var(--line);
+    background: #000;
+  }
+  .row img {
+    width: 100%;
+    height: 100%;
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
+    transition: transform 0.5s var(--ease);
+  }
+  .row a:hover img {
+    transform: scale(1.03);
+  }
+  .row span {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    padding: 22px 12px 10px;
+    background: linear-gradient(transparent, rgba(8, 4, 14, 0.85));
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--ink);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .big span {
+    font-size: 1rem;
+    padding: 40px 18px 14px;
+  }
+  @media (max-width: 760px) {
+    .row {
+      grid-template-columns: 1fr 1fr;
+    }
+    .row span {
+      font-size: 0.78rem;
+      padding: 18px 8px 7px;
+    }
+  }
+</style>

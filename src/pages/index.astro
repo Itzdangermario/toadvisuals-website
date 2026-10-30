@@ -1,0 +1,505 @@
+---
+import Base from '../layouts/Base.astro';
+import Icon from '../components/Icon.astro';
+import PixelMascot from '../components/PixelMascot.astro';
+import Playground from '../components/Playground.astro';
+import GalleryStrip from '../components/GalleryStrip.astro';
+import LiveStats from '../components/LiveStats.astro';
+import NextUpdate from '../components/NextUpdate.astro';
+import { latest, mcVersions } from '../lib/releases';
+import { site } from '../data/site';
+import { pvpModes } from '../data/features';
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'SoftwareApplication',
+  name: site.name,
+  applicationCategory: 'GameApplication',
+  operatingSystem: 'Windows, macOS, Linux (Minecraft Java Edition with Fabric)',
+  softwareVersion: latest.version,
+  datePublished: latest.date,
+  description: site.description,
+  url: site.url,
+  downloadUrl: new URL('/downloads/', site.url).href,
+  image: new URL('/img/og.png', site.url).href,
+  author: site.authors.map((name) => ({ '@type': 'Person', name })),
+  offers: { '@type': 'Offer', price: '0', priceCurrency: 'EUR' },
+};
+
+const highlights = [
+  { icon: 'spark', title: 'Kill effects', text: 'Eighteen effects, item animations and your own kill sounds.', href: '/features/#kill-effects' },
+  { icon: 'target', title: 'CPvP essentials', text: 'Fullbright, invisible shield, quieter crystals, smaller totems.', href: '/features/#cpvp' },
+  { icon: 'hud', title: 'PvP HUD', text: 'Totems, crystals, pearls, potions and armor at a glance.', href: '/features/#hud' },
+  { icon: 'palette', title: 'Glint and opacity', text: 'Recolour the glint, fade fire, water and overlays.', href: '/features/#opacity-glint' },
+  { icon: 'sound', title: 'Sound editor', text: 'Kill, hit, shield and totem sounds, or your own files.', href: '/features/#sounds' },
+  { icon: 'save', title: 'Presets', text: 'Save whole setups and share them as a code.', href: '/features/#presets' },
+];
+---
+<Base path="/" jsonLd={jsonLd}>
+  <!-- 1. Hero -->
+  <section class="hero">
+    <div class="pixels" aria-hidden="true"></div>
+    <div class="wrap hero-grid">
+      <div class="hero-copy">
+        <a class="release" href="/changelog/">
+          <span class="chip chip-new">New</span>
+          <span>Version {latest.version} is out</span>
+        </a>
+        <h1>Build your own texture empire.</h1>
+        <p class="lead">
+          Toad's Visuals takes the best textures from every pack you own and turns them into one PvP setup. Add kill
+          effects, sounds, your own crosshair and a HUD – all in one menu.
+        </p>
+        <div class="actions">
+          <a class="btn btn-primary btn-lg" href="/downloads/">
+            <Icon name="download" size={22} />
+            Download {latest.version}
+          </a>
+          <a class="btn btn-ghost btn-lg" href="/try/">Try it in your browser</a>
+        </div>
+        <p class="meta">Free for Fabric, Minecraft {mcVersions.join(' and ')}</p>
+      </div>
+      <div class="hero-art">
+        <PixelMascot size={330} />
+      </div>
+    </div>
+    <div class="wrap stats-row">
+      <LiveStats />
+    </div>
+  </section>
+
+  <!-- 2. Screenshots -->
+  <GalleryStrip />
+
+  <!-- 3. Texture mixing -->
+  <section class="section packs" aria-labelledby="packs-title">
+    <div class="wrap packs-grid">
+      <div class="packs-copy">
+        <h2 id="packs-title">Every pack you own, one setup</h2>
+        <p class="lead">
+          Take the sword from one pack, the crystals from another and the totem from a third. Every collection shows your
+          packs side by side with a live 3D preview.
+        </p>
+        <a class="btn btn-ghost" href="/features/#texture-mixing">How texture mixing works</a>
+      </div>
+      <div class="modes glass">
+        <h3>Ready-made for your mode</h3>
+        <p class="muted">Each PvP mode starts with the textures it actually uses.</p>
+        <ul>
+          {pvpModes.map((m) => <li>{m}</li>)}
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4. Try it -->
+  <section class="section try" id="try" aria-labelledby="try-title">
+    <div class="wrap">
+      <div class="section-head">
+        <h2 id="try-title">Try it right here</h2>
+        <p>Pick a kill effect, build a crosshair or recolour the glint. The same options you get in the mod.</p>
+      </div>
+      <Playground />
+    </div>
+  </section>
+
+  <!-- 5. Extras -->
+  <section class="section highlights" aria-labelledby="hl-title">
+    <div class="wrap">
+      <div class="section-head">
+        <h2 id="hl-title">And a lot more in Extras</h2>
+      </div>
+      <ul class="hl-list">
+        {
+          highlights.map((h) => (
+            <li>
+              <a href={h.href}>
+                <span class="hl-icon">
+                  <Icon name={h.icon} size={22} />
+                </span>
+                <span>
+                  <strong>{h.title}</strong>
+                  <span class="muted">{h.text}</span>
+                </span>
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+      <a class="all-features" href="/features/">See all features</a>
+    </div>
+  </section>
+
+  <!-- 6. Updates -->
+  <section class="section updates" aria-labelledby="updates-title">
+    <div class="wrap">
+      <div class="section-head">
+        <h2 id="updates-title">Updates</h2>
+        <p>Regular updates for Minecraft {mcVersions.join(' and ')}. Here is what's next.</p>
+      </div>
+      <NextUpdate />
+    </div>
+  </section>
+
+  <!-- 7. Fair play -->
+  <section class="section fair" aria-labelledby="fair-title">
+    <div class="wrap fair-grid">
+      <div>
+        <h2 id="fair-title">Visual only, fair by design</h2>
+        <p class="lead">Toad's Visuals changes how the game looks and sounds for you. It never plays for you.</p>
+        <a class="btn btn-ghost" href="/faq/#servers">Is it allowed on servers?</a>
+      </div>
+      <ul class="checks">
+        <li><Icon name="check" /> No changes to movement, reach, attack speed or hit detection</li>
+        <li><Icon name="check" /> No aiming or attacking for you, and nothing that affects the game is sent to the server</li>
+        <li><Icon name="check" /> No information you could not see yourself: no enemy HUD, no pop counter</li>
+        <li><Icon name="check" /> Server owners can switch fullbright off for their players</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- 8. Download -->
+  <section class="section get" aria-labelledby="get-title">
+    <div class="wrap">
+      <div class="get-box glass">
+        <img src="/img/toad-192.png" width="88" height="88" alt="" decoding="async" />
+        <div class="get-copy">
+          <h2 id="get-title">Get Toad's Visuals {latest.version}</h2>
+          <p class="muted">Free, for Fabric. Pick the file for your Minecraft version.</p>
+        </div>
+        <div class="get-files">
+          {
+            latest.files.map((f) => (
+              <a class="btn btn-primary" href={f.href} download={f.external ? undefined : f.name} data-dl-version={latest.version} data-dl-mc={f.mc}>
+                <Icon name="download" size={18} />
+                Minecraft {f.mc}
+                {f.size && <span class="size">{f.size}</span>}
+              </a>
+            ))
+          }
+          <a class="install-link" href="/faq/#install">How to install</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .hero {
+    position: relative;
+    padding-top: clamp(36px, 6vw, 84px);
+    padding-bottom: clamp(36px, 5vw, 64px);
+    overflow: hidden;
+    isolation: isolate;
+  }
+
+  .pixels {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background-image:
+      linear-gradient(rgba(199, 125, 255, 0.07) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(199, 125, 255, 0.07) 1px, transparent 1px);
+    background-size: 32px 32px;
+    -webkit-mask-image: radial-gradient(60% 70% at 72% 40%, #000 0%, transparent 75%);
+    mask-image: radial-gradient(60% 70% at 72% 40%, #000 0%, transparent 75%);
+  }
+
+  .hero-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.25fr) minmax(0, 0.75fr);
+    align-items: center;
+    gap: clamp(28px, 5vw, 64px);
+  }
+
+  .release {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 5px 14px 5px 5px;
+    border-radius: var(--r-chip);
+    border: 1px solid var(--line);
+    background: rgba(243, 238, 250, 0.03);
+    color: var(--muted);
+    font-size: 0.92rem;
+    font-weight: 650;
+    text-decoration: none;
+    margin-bottom: 24px;
+  }
+
+  .release:hover {
+    color: var(--ink);
+    border-color: rgba(199, 125, 255, 0.4);
+  }
+
+  .hero h1 {
+    font-size: clamp(2.7rem, 1.4rem + 5.2vw, 5.6rem);
+    font-weight: 650;
+    line-height: 0.98;
+    letter-spacing: -0.02em;
+    margin-bottom: 24px;
+    max-width: 12ch;
+    background: linear-gradient(180deg, #ffffff 35%, #d9bcff 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  .actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 32px;
+  }
+
+  .meta {
+    margin-top: 18px;
+    color: var(--faint);
+    font-size: 0.95rem;
+    font-weight: 600;
+  }
+
+  .hero-art {
+    display: grid;
+    justify-items: center;
+  }
+
+  .stats-row {
+    margin-top: clamp(32px, 5vw, 56px);
+  }
+
+  .stats-row :global(.stats) {
+    padding-top: 24px;
+    border-top: 1px solid var(--line-soft);
+  }
+
+  .packs-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+    gap: clamp(32px, 6vw, 80px);
+    align-items: center;
+  }
+
+  .packs-copy h2 {
+    margin-bottom: 18px;
+  }
+
+  .packs-copy .lead {
+    margin-bottom: 26px;
+  }
+
+  .modes {
+    padding: clamp(22px, 3vw, 32px);
+  }
+
+  .modes p {
+    margin: 6px 0 18px;
+    font-size: 0.97rem;
+  }
+
+  .modes ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+  }
+
+  .modes li {
+    padding: 10px 14px;
+    border-radius: var(--r-control);
+    background: rgba(167, 85, 255, 0.08);
+    border: 1px solid var(--line-soft);
+    font-weight: 650;
+    font-size: 0.95rem;
+  }
+
+  .try {
+    padding-top: 0;
+  }
+
+  .highlights,
+  .updates {
+    padding-top: 0;
+  }
+
+  .hl-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 12px;
+  }
+
+  .hl-list a {
+    display: flex;
+    gap: 16px;
+    height: 100%;
+    padding: 22px;
+    border-radius: 16px;
+    border: 1px solid var(--line-soft);
+    background: rgba(243, 238, 250, 0.02);
+    color: var(--ink);
+    text-decoration: none;
+    transition: border-color 0.2s, background-color 0.2s;
+  }
+
+  .hl-list a:hover {
+    border-color: rgba(167, 85, 255, 0.4);
+    background: rgba(167, 85, 255, 0.06);
+  }
+
+  .hl-list strong {
+    display: block;
+    font-size: 1.05rem;
+    margin-bottom: 4px;
+  }
+
+  .hl-list .muted {
+    font-size: 0.95rem;
+    line-height: 1.5;
+  }
+
+  .hl-icon {
+    flex: none;
+    display: grid;
+    place-items: center;
+    width: 42px;
+    height: 42px;
+    border-radius: 12px;
+    background: rgba(167, 85, 255, 0.12);
+    color: var(--lilac);
+  }
+
+  .all-features {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    margin-top: 14px;
+    font-weight: 700;
+  }
+
+  .fair {
+    background: linear-gradient(180deg, transparent, rgba(167, 85, 255, 0.05) 50%, transparent);
+  }
+
+  .fair-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr);
+    gap: clamp(32px, 6vw, 80px);
+    align-items: start;
+  }
+
+  .fair h2 {
+    margin-bottom: 18px;
+  }
+
+  .fair .lead {
+    margin-bottom: 26px;
+  }
+
+  .checks {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+  }
+
+  .checks li {
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+    padding: 16px 0;
+    border-bottom: 1px solid var(--line-soft);
+    font-weight: 600;
+  }
+
+  .checks li :global(svg) {
+    flex: none;
+    color: var(--lilac);
+    margin-top: 2px;
+  }
+
+  .get {
+    padding-top: clamp(16px, 3vw, 32px);
+  }
+
+  .get-box {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 28px;
+    padding: clamp(24px, 4vw, 40px);
+  }
+
+  .get-copy h2 {
+    font-size: var(--step-2);
+    margin-bottom: 6px;
+  }
+
+  .get-files {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .size {
+    font-weight: 600;
+    opacity: 0.7;
+    font-size: 0.88rem;
+  }
+
+  .install-link {
+    padding: 10px 6px;
+    font-weight: 650;
+    font-size: 0.95rem;
+  }
+
+  @media (max-width: 960px) {
+    .hero-grid,
+    .packs-grid,
+    .fair-grid {
+      grid-template-columns: 1fr;
+    }
+    .hero-art {
+      order: -1;
+    }
+    .hero-art :global(.mascot) {
+      width: min(200px, 50vw);
+    }
+    .hl-list {
+      grid-template-columns: 1fr 1fr;
+    }
+    .get-box {
+      grid-template-columns: auto 1fr;
+    }
+    .get-files {
+      grid-column: 1 / -1;
+    }
+  }
+
+  @media (max-width: 620px) {
+    .hl-list {
+      grid-template-columns: 1fr;
+    }
+    .actions .btn {
+      flex: 1 1 100%;
+    }
+    .modes ul {
+      grid-template-columns: 1fr;
+    }
+    .get-box {
+      grid-template-columns: 1fr;
+    }
+    .get-box img {
+      width: 64px;
+      height: 64px;
+    }
+    .get-files .btn {
+      flex: 1 1 100%;
+    }
+  }
+</style>

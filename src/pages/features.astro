@@ -1,0 +1,249 @@
+---
+import Base from '../layouts/Base.astro';
+import Icon from '../components/Icon.astro';
+import Playground from '../components/Playground.astro';
+import { featureGroups, killEffects } from '../data/features';
+import { latest } from '../lib/releases';
+---
+<Base
+  title="Features"
+  description="Texture mixing from all your packs, kill effects, sounds, CPvP essentials, a crosshair editor, PvP HUD, glint styles, sky editor and more. Everything Toad's Visuals can do."
+>
+  <section class="page-hero">
+    <div class="glow" aria-hidden="true"></div>
+    <div class="wrap">
+      <h1>Features</h1>
+      <p class="lead">
+        Everything in version {latest.version}. All of it is client-side: it changes what you see and hear, never how the
+        game plays.
+      </p>
+      <nav class="jump" aria-label="Feature groups">
+        {featureGroups.map((g) => <a class="btn btn-ghost btn-sm" href={`#${g.id}`}>{g.title}</a>)}
+      </nav>
+    </div>
+  </section>
+
+  {
+    featureGroups.map((g) => (
+      <section class="wrap group" id={g.id} aria-labelledby={`${g.id}-title`}>
+        <div class="group-head">
+          <h2 id={`${g.id}-title`}>{g.title}</h2>
+          <p class="lead">{g.intro}</p>
+        </div>
+        <div class="items">
+          {g.items.map((f) => (
+            <article class:list={['item', { wide: !!f.points || !!f.image }]} id={f.id}>
+              <div class="item-icon">
+                <Icon name={f.icon} size={22} />
+              </div>
+              <div class="item-body">
+                <h3>{f.title}</h3>
+                <p>{f.text}</p>
+                {f.points && (
+                  <ul class="points">
+                    {f.points.map((p) => (
+                      <li>
+                        <Icon name="check" size={16} />
+                        {p}
+                      </li>
+                    ))}
+                  </ul>
+                )}
+                {f.id === 'kill-effects' && (
+                  <details class="effects">
+                    <summary>All {killEffects.length} kill effects</summary>
+                    <ul>
+                      {killEffects.map((k) => (
+                        <li>
+                          <strong>{k.name}</strong>
+                          <span class="muted">{k.text}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </details>
+                )}
+              </div>
+              {f.image && <img class="shot" src={f.image} alt={`${f.title} in Toad's Visuals`} loading="lazy" />}
+            </article>
+          ))}
+        </div>
+      </section>
+    ))
+  }
+
+  <section class="wrap section" aria-labelledby="try-title">
+    <div class="section-head">
+      <h2 id="try-title">Try the Extras</h2>
+      <p>Kill effects, crosshair, glint, block outline, hit colour and the PvP HUD, right in your browser.</p>
+    </div>
+    <Playground />
+  </section>
+
+  <section class="wrap cta">
+    <a class="btn btn-primary btn-lg" href="/downloads/">
+      <Icon name="download" size={22} />
+      Download {latest.version}
+    </a>
+    <a class="btn btn-ghost btn-lg" href="/faq/#install">How to install</a>
+  </section>
+</Base>
+
+<style>
+  .jump {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 28px;
+  }
+
+  .group {
+    padding-block: clamp(40px, 6vw, 72px);
+    border-top: 1px solid var(--line-soft);
+  }
+
+  .group-head {
+    display: grid;
+    grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
+    gap: 16px 48px;
+    align-items: start;
+    margin-bottom: 36px;
+  }
+
+  .group-head .lead {
+    font-size: var(--step-1);
+  }
+
+  .items {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0 48px;
+  }
+
+  .item {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    gap: 18px;
+    padding: 26px 0;
+    border-bottom: 1px solid var(--line-soft);
+    scroll-margin-top: 96px;
+  }
+
+  .item.wide {
+    grid-column: 1 / -1;
+  }
+
+  .item:target {
+    background: linear-gradient(90deg, rgba(167, 85, 255, 0.1), transparent 70%);
+    border-radius: 12px;
+  }
+
+  .item-icon {
+    display: grid;
+    place-items: center;
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+    background: rgba(167, 85, 255, 0.12);
+    color: var(--lilac);
+  }
+
+  .item-body h3 {
+    margin-bottom: 6px;
+  }
+
+  .item-body > p {
+    color: #d6cde3;
+    max-width: 64ch;
+  }
+
+  .points {
+    list-style: none;
+    padding: 0;
+    margin: 16px 0 0;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px 28px;
+  }
+
+  .points li {
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+    font-weight: 600;
+    font-size: 0.97rem;
+  }
+
+  .points :global(svg) {
+    flex: none;
+    margin-top: 4px;
+    color: var(--lilac);
+  }
+
+  .shot {
+    grid-column: 2;
+    width: 100%;
+    border-radius: var(--r-control);
+    border: 1px solid var(--line);
+  }
+
+  .effects {
+    margin-top: 14px;
+  }
+
+  .effects summary {
+    cursor: pointer;
+    font-weight: 700;
+    color: var(--lilac);
+    min-height: 40px;
+    display: inline-flex;
+    align-items: center;
+  }
+
+  .effects ul {
+    list-style: none;
+    margin: 10px 0 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 8px 24px;
+  }
+
+  .effects li {
+    display: grid;
+    font-size: 0.95rem;
+    padding: 8px 0;
+    border-bottom: 1px solid var(--line-soft);
+  }
+
+  .cta {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 12px;
+    padding-bottom: clamp(64px, 9vw, 120px);
+  }
+
+  @media (max-width: 860px) {
+    .group-head,
+    .items {
+      grid-template-columns: 1fr;
+    }
+    .points,
+    .effects ul {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .item {
+      grid-template-columns: 1fr;
+      gap: 12px;
+    }
+    .shot {
+      grid-column: 1;
+    }
+    .cta .btn {
+      flex: 1 1 100%;
+    }
+  }
+</style>

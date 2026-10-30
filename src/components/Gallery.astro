@@ -1,0 +1,50 @@
+---
+/** Real screenshots from src/data/site.ts. Nothing is shown while the list is empty. */
+import { site } from '../data/site';
+const shots = site.screenshots;
+---
+{
+  shots.length > 0 && (
+    <div class="gallery">
+      <h3>Screenshots</h3>
+      <ul>
+        {shots.map((s) => (
+          <li>
+            <a href={s.src} target="_blank" rel="noopener">
+              <img src={s.src} alt={s.alt} loading="lazy" decoding="async" />
+            </a>
+            {s.caption && <p class="muted">{s.caption}</p>}
+          </li>
+        ))}
+      </ul>
+    </div>
+  )
+}
+
+<style>
+  .gallery {
+    margin-top: 48px;
+  }
+  .gallery h3 {
+    margin-bottom: 16px;
+  }
+  ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 320px), 1fr));
+    gap: 16px;
+  }
+  img {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
+    border-radius: var(--r-control);
+    border: 1px solid var(--line);
+  }
+  p {
+    margin-top: 8px;
+    font-size: 0.95rem;
+  }
+</style>

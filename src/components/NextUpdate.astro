@@ -1,0 +1,218 @@
+---
+/** Countdown to the next update (site.nextUpdate) and the recent releases as a timeline. */
+import { site } from '../data/site';
+import changelog from '../data/changelog.json';
+import { formatDate } from '../lib/releases';
+
+interface Props { recent?: number }
+const { recent = 4 } = Astro.props;
+const next = site.nextUpdate;
+const at = new Date(next.at);
+const german = at.toLocaleString('de-DE', { timeZone: 'Europe/Berlin', weekday: 'long', day: 'numeric', month: 'long', hour: '2-digit', minute: '2-digit' });
+const zone = at.toLocaleTimeString('en-GB', { timeZone: 'Europe/Berlin', timeZoneName: 'short' }).split(' ').pop();
+const english = at.toLocaleString('en-GB', { timeZone: 'Europe/Berlin', weekday: 'long', day: 'numeric', month: 'long', hour: '2-digit', minute: '2-digit' });
+const past = changelog.versions.slice(0, recent);
+---
+<div class="timeline-wrap">
+  <div class="next glass" data-countdown data-at={at.toISOString()}>
+    <div class="next-head">
+      <span class="chip chip-new">Coming soon</span>
+      <h3>{next.title}</h3>
+      <p class="muted">
+        <time datetime={at.toISOString()}>{english} · German time ({zone})</time>
+        <span class="local" data-local hidden></span>
+      </p>
+    </div>
+    <div class="clock" role="timer" aria-label={`Time until the next update: ${german}`}>
+      <div><strong data-d>–</strong><span>days</span></div>
+      <div><strong data-h>–</strong><span>hours</span></div>
+      <div><strong data-m>–</strong><span>minutes</span></div>
+      <div><strong data-s>–</strong><span>seconds</span></div>
+    </div>
+    <p class="released" data-released hidden>The update is out – check the <a href="/downloads/">downloads</a>.</p>
+  </div>
+
+  <ol class="timeline" aria-label="Recent updates">
+    {
+      past.map((v) => (
+        <li>
+          <a href={`/changelog/#v${v.version}`}>
+            <span class="v">{v.version}</span>
+            <time datetime={v.date}>{formatDate(v.date)}</time>
+            <span class="t">{v.title.en}</span>
+          </a>
+        </li>
+      ))
+    }
+  </ol>
+</div>
+
+<script>
+  document.querySelectorAll<HTMLElement>('[data-countdown]').forEach((root) => {
+    const at = Date.parse(root.dataset.at!);
+    const q = (s: string) => root.querySelector<HTMLElement>(s)!;
+    const local = q('[data-local]');
+    const zone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+    if (zone && zone !== 'Europe/Berlin') {
+      local.textContent = `Your time: ${new Date(at).toLocaleString(undefined, { weekday: 'long', hour: '2-digit', minute: '2-digit' })}`;
+      local.hidden = false;
+    }
+    const pad = (n: number) => String(n).padStart(2, '0');
+    const tick = () => {
+      let left = Math.max(0, Math.floor((at - Date.now()) / 1000));
+      if (left === 0) {
+        q('.clock').hidden = true;
+        q('[data-released]').hidden = false;
+        return;
+      }
+      const d = Math.floor(left / 86400);
+      left -= d * 86400;
+      q('[data-d]').textContent = String(d);
+      q('[data-h]').textContent = pad(Math.floor(left / 3600));
+      q('[data-m]').textContent = pad(Math.floor((left % 3600) / 60));
+      q('[data-s]').textContent = pad(left % 60);
+      setTimeout(tick, 1000 - (Date.now() % 1000));
+    };
+    tick();
+  });
+</script>
+
+<style>
+  .timeline-wrap {
+    display: grid;
+    grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+    gap: 28px;
+    align-items: stretch;
+  }
+
+  .next {
+    padding: clamp(22px, 3vw, 32px);
+    display: grid;
+    gap: 22px;
+    align-content: start;
+    background:
+      radial-gradient(80% 120% at 100% 0%, rgba(167, 85, 255, 0.22), transparent 60%),
+      var(--glass);
+  }
+
+  .next-head h3 {
+    font-family: var(--font-display);
+    font-size: var(--step-2);
+    font-weight: 600;
+    margin: 12px 0 4px;
+  }
+
+  .next-head p {
+    display: grid;
+    gap: 2px;
+    font-size: 0.97rem;
+  }
+
+  .local {
+    color: var(--faint);
+    font-size: 0.9rem;
+  }
+
+  .clock {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 10px;
+  }
+
+  .clock div {
+    display: grid;
+    justify-items: center;
+    gap: 2px;
+    padding: 14px 6px 12px;
+    border-radius: 14px;
+    background: rgba(14, 10, 22, 0.55);
+    border: 1px solid var(--line);
+  }
+
+  .clock strong {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: clamp(1.7rem, 1.2rem + 2vw, 2.6rem);
+    line-height: 1;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .clock span {
+    color: var(--muted);
+    font-size: 0.82rem;
+    font-weight: 600;
+  }
+
+  .timeline {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    align-content: start;
+  }
+
+  .timeline li {
+    position: relative;
+    padding-left: 26px;
+    border-left: 1px solid var(--line);
+  }
+
+  .timeline li::before {
+    content: '';
+    position: absolute;
+    left: -5px;
+    top: 22px;
+    width: 9px;
+    height: 9px;
+    border-radius: 3px;
+    background: var(--night);
+    border: 2px solid var(--purple);
+  }
+
+  .timeline a {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 2px 12px;
+    padding: 14px 12px;
+    border-radius: 12px;
+    color: var(--ink);
+    text-decoration: none;
+  }
+
+  .timeline a:hover {
+    background: rgba(167, 85, 255, 0.07);
+  }
+
+  .v {
+    font-weight: 800;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .timeline time {
+    color: var(--faint);
+    font-size: 0.88rem;
+    align-self: center;
+  }
+
+  .t {
+    grid-column: 1 / -1;
+    color: var(--muted);
+    font-size: 0.95rem;
+    line-height: 1.45;
+  }
+
+  @media (max-width: 860px) {
+    .timeline-wrap {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (max-width: 400px) {
+    .clock {
+      gap: 6px;
+    }
+    .clock div {
+      padding: 12px 2px 10px;
+    }
+  }
+</style>

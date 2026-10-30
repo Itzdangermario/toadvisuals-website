@@ -1,0 +1,628 @@
+{
+	"versions": [
+		{
+			"version": "1.8.5",
+			"date": "2026-10-29",
+			"title": {
+				"en": "Fixes for logos on name holograms.",
+				"de": "Korrekturen für Logos auf Namens-Hologrammen."
+			},
+			"fixed": [
+				{
+					"en": "On some servers the logo was added to name holograms again and again until they filled the screen.",
+					"de": "Auf manchen Servern wurde das Logo immer wieder in Namens-Hologramme eingefügt, bis sie den Bildschirm füllten."
+				},
+				{
+					"en": "No more box between the logo and the name; the logo now sits right in front of the name.",
+					"de": "Kein Kästchen mehr zwischen Logo und Name; das Logo steht jetzt direkt vor dem Namen."
+				},
+				{
+					"en": "Holograms that do not show the player's name no longer get a logo.",
+					"de": "Hologramme, die nicht den Namen des Spielers zeigen, bekommen kein Logo mehr."
+				}
+			]
+		},
+		{
+			"version": "1.8.4",
+			"date": "2026-10-29",
+			"title": {
+				"en": "See how many players are online, logos on name holograms.",
+				"de": "Sehen, wie viele Spieler online sind, Logos auf Namens-Hologrammen."
+			},
+			"added": [
+				{
+					"en": "Next to the version at the top of the menu: how many Toad's Visuals players are playing right now.",
+					"de": "Neben der Version oben im Menü: wie viele Toad's-Visuals-Spieler gerade spielen."
+				},
+				{
+					"en": "Logos and gold names also show on servers that display names with holograms (text displays, armor stands).",
+					"de": "Logos und Goldnamen erscheinen auch auf Servern, die Namen mit Hologrammen zeigen (Text-Displays, Rüstungsständer)."
+				}
+			],
+			"changed": [
+				{
+					"en": "The tab list and your own logo always show the logos; the switch now only hides logos above other players' heads.",
+					"de": "Tab-Liste und dein eigenes Logo zeigen die Logos immer; der Schalter blendet jetzt nur die Logos über den Köpfen anderer Spieler aus."
+				}
+			],
+			"fixed": [
+				{
+					"en": "Nick: your name no longer shows twice above your head (F5) on servers that show it themselves.",
+					"de": "Nick: dein Name erscheint über deinem Kopf (F5) nicht mehr doppelt auf Servern, die ihn selbst anzeigen."
+				}
+			]
+		},
+		{
+			"version": "1.8.3",
+			"date": "2026-10-29",
+			"title": {
+				"en": "Picture logos, gold names and a better nick.",
+				"de": "Bild-Logos, Goldnamen und ein besserer Nick."
+			},
+			"added": [
+				{
+					"en": "Picture logos: players can get their own picture as logo (in the tab list and above the head), seen by all Toad's Visuals players.",
+					"de": "Bild-Logos: Spieler können ein eigenes Bild als Logo bekommen (Tab-Liste und über dem Kopf), das alle Toad's-Visuals-Spieler sehen."
+				},
+				{
+					"en": "Gold name: a shining gold name for chosen players, seen by other Toad's Visuals players.",
+					"de": "Goldname: ein glänzender goldener Name für ausgewählte Spieler, den andere Toad's-Visuals-Spieler sehen."
+				}
+			],
+			"fixed": [
+				{
+					"en": "Nick: your real name is now replaced everywhere on your screen (tab list, chat, F5, name holograms of the server) instead of showing up next to the nick; ranks and colours stay.",
+					"de": "Nick: dein echter Name wird jetzt überall auf deinem Bildschirm ersetzt (Tab-Liste, Chat, F5, Namens-Hologramme des Servers), statt neben dem Nick aufzutauchen; Ränge und Farben bleiben."
+				}
+			]
+		},
+		{
+			"version": "1.8.2",
+			"date": "2026-10-29",
+			"title": {
+				"en": "See each other's logo on every server.",
+				"de": "Gegenseitig das Logo auf jedem Server sehen."
+			},
+			"added": [
+				{
+					"en": "Logo sync: all Toad's Visuals players see each other's Toad logo in the tab list and above the head, on every server, without a server plugin. Mojang confirms the account, only the Minecraft UUID is stored; it can be switched off in Settings → Privacy.",
+					"de": "Logo-Sync: alle Toad's-Visuals-Spieler sehen gegenseitig ihr Toad-Logo in der Tab-Liste und über dem Kopf, auf jedem Server, ohne Server-Plugin. Mojang bestätigt den Account, gespeichert wird nur die Minecraft-UUID; abschaltbar unter Einstellungen → Datenschutz."
+				}
+			]
+		},
+		{
+			"version": "1.8.1",
+			"date": "2026-10-29",
+			"title": {
+				"en": "Diamond and netherite tools as their own collections, nick skin fix.",
+				"de": "Diamant- und Netherite-Werkzeuge als eigene Sammlungen, Nick-Skin repariert."
+			},
+			"added": [
+				{
+					"en": "Diamond Sword, Netherite Sword, Diamond Axe, Netherite Axe … are collections of their own, like the armor: each gets its own pack. The other tools are in \"Other Swords\", \"Other Axes\" …",
+					"de": "Diamant-Schwert, Netherite-Schwert, Diamant-Axt, Netherite-Axt … sind eigene Sammlungen, wie bei der Rüstung: jede bekommt ihr eigenes Pack. Die anderen Werkzeuge sind in \"Andere Schwerter\", \"Andere Äxte\" …"
+				},
+				{
+					"en": "Nick: a Load again button, and the settings say why a skin could not be loaded.",
+					"de": "Nick: ein Neu-laden-Knopf, und die Einstellungen sagen, warum ein Skin nicht geladen werden konnte."
+				}
+			],
+			"changed": [
+				{
+					"en": "\"Separate\" from 1.8.0 is replaced by the new collections. A diamond pack no longer goes on netherite by itself; choose Both for that.",
+					"de": "\"Getrennt\" aus 1.8.0 wurde durch die neuen Sammlungen ersetzt. Ein Diamant-Pack kommt nicht mehr von selbst auf Netherite; dafür Beide wählen."
+				}
+			],
+			"fixed": [
+				{
+					"en": "Nick skin: the chosen skin is now also used when a server sends your tab list entry again, and the lookup no longer runs on every typed letter.",
+					"de": "Nick-Skin: der gewählte Skin wird jetzt auch benutzt, wenn ein Server deinen Tab-Listen-Eintrag neu schickt, und es wird nicht mehr bei jedem getippten Buchstaben gesucht."
+				}
+			]
+		},
+		{
+			"version": "1.8.0",
+			"date": "2026-10-29",
+			"title": {
+				"en": "Separate diamond and netherite textures, nick, bigger or smaller menu, Minecraft 26.2.",
+				"de": "Getrennte Diamant- und Netherite-Texturen, Nick, Menü größer oder kleiner, Minecraft 26.2."
+			},
+			"added": [
+				{
+					"en": "Tools: \"Separate\" picks one pack for diamond and another one for netherite (Pick for: Diamond / Netherite). Diamond and netherite armor link to each other, so each has its own pack, worn armor included.",
+					"de": "Werkzeuge: \"Getrennt\" wählt ein Pack für Diamant und ein anderes für Netherite (Wählen für: Diamant / Netherite). Diamant- und Netherite-Rüstung verweisen aufeinander, jede hat ihr eigenes Pack, auch die getragene Rüstung."
+				},
+				{
+					"en": "Settings → Nick: another name and the skin of another player, only on your screen (tab list and above your head).",
+					"de": "Einstellungen → Nick: ein anderer Name und der Skin eines anderen Spielers, nur auf deinem Bildschirm (Tab-Liste und über deinem Kopf)."
+				},
+				{
+					"en": "Your own name with the Toad logo above your head in third person (F5).",
+					"de": "Dein eigener Name mit dem Toad-Logo über deinem Kopf in der dritten Person (F5)."
+				},
+				{
+					"en": "Window size is a slider (40 % to full screen) with - and + buttons.",
+					"de": "Die Fenstergröße ist ein Schieberegler (40 % bis Vollbild) mit - und + Knöpfen."
+				},
+				{
+					"en": "The \"open with\" hint at game start can be switched off in Settings → General.",
+					"de": "Der „Öffnen mit“-Hinweis beim Spielstart kann in Einstellungen → Allgemein ausgeschaltet werden."
+				},
+				{
+					"en": "Also available for Minecraft 26.2.",
+					"de": "Jetzt auch für Minecraft 26.2."
+				}
+			],
+			"fixed": [
+				{
+					"en": "Names after the logo in the tab list and above heads showed as boxes.",
+					"de": "Namen hinter dem Logo in der Tab-Liste und über Köpfen wurden als Kästchen angezeigt."
+				}
+			]
+		},
+		{
+			"version": "1.7.5",
+			"date": "2026-10-29",
+			"title": {
+				"en": "Own kill effect animations, Skyboxify skies, Right Shift and diamond/netherite/both.",
+				"de": "Eigene Kill-Effekt-Animationen, Skyboxify-Himmel, Rechte Umschalttaste und Diamant/Netherite/Beide."
+			},
+			"added": [
+				{
+					"en": "Kill effects and item animations are the mod's own animations now (glows, sparks, rings, hearts, confetti, smoke, lightning, beams) instead of Minecraft particles.",
+					"de": "Kill-Effekte und Item-Animationen sind jetzt eigene Animationen der Mod (Leuchten, Funken, Ringe, Herzen, Konfetti, Rauch, Blitz, Strahlen) statt Minecraft-Partikel."
+				},
+				{
+					"en": "Armor and tools: choose Diamond, Netherite or Both for the style you picked; tools also choose the look for Both.",
+					"de": "Rüstung und Werkzeuge: Diamant, Netherite oder Beide für den gewählten Stil; bei Werkzeugen zusätzlich das Aussehen für Beide."
+				},
+				{
+					"en": "Many more sounds for shield break and totem pop (60).",
+					"de": "Viel mehr Sounds für Schildbruch und Totem-Pop (60)."
+				},
+				{
+					"en": "Every game start shows how to open the menu, until you open it.",
+					"de": "Bei jedem Spielstart steht groß da, wie man das Menü öffnet, bis du es öffnest."
+				}
+			],
+			"changed": [
+				{
+					"en": "The menu key is Right Shift (L and O move to it once).",
+					"de": "Die Menütaste ist die rechte Umschalttaste (L und O werden einmal umgestellt)."
+				},
+				{
+					"en": "Sky editor reworked: the sky goes into the generated pack as an OptiFine sky and the Skyboxify mod draws it; new preview of the whole horizon, time of day, cover or glow.",
+					"de": "Himmel-Editor überarbeitet: Der Himmel kommt als OptiFine-Himmel ins erzeugte Pack und die Mod Skyboxify zeichnet ihn; neue Vorschau des ganzen Horizonts, Tageszeit, Abdecken oder Leuchten."
+				},
+				{
+					"en": "The player logo is always on and always the Toad's Visuals logo.",
+					"de": "Das Spieler-Logo ist immer an und immer das Toad's-Visuals-Logo."
+				}
+			],
+			"fixed": [
+				{
+					"en": "3D item previews: the edges of items no longer show stray stripes when you turn or tilt them.",
+					"de": "3D-Item-Vorschau: Die Kanten zeigen beim Drehen oder Kippen keine falschen Streifen mehr."
+				}
+			]
+		},
+		{
+			"version": "1.6.0",
+			"date": "2026-10-29",
+			"title": {
+				"en": "Sound editor, sky editor, hide armor, player logo and share codes for presets.",
+				"de": "Sound-Editor, Himmel-Editor, Rüstung verstecken, Spieler-Logo und Share-Codes für Presets."
+			},
+			"added": [
+				{
+					"en": "Sound editor: kill, hit, shield break and totem pop sounds in one place, with your own .ogg files, preview and volume.",
+					"de": "Sound-Editor: Kill-, Hit-, Schildbruch- und Totem-Pop-Sounds an einem Ort, mit eigenen .ogg-Dateien, Vorschau und Lautstärke."
+				},
+				{
+					"en": "Hide armor: your own armor, other players' and mobs', each hidden or see-through (opacity slider).",
+					"de": "Rüstung verstecken: deine Rüstung, die anderer Spieler und von Mobs, jeweils versteckt oder durchsichtig (Deckkraft-Regler)."
+				},
+				{
+					"en": "Sky editor: premade skies, OptiFine skies found in your packs, or your own 3×2 image.",
+					"de": "Himmel-Editor: fertige Himmel, OptiFine-Himmel aus deinen Packs oder dein eigenes 3×2-Bild."
+				},
+				{
+					"en": "Player logo in the tab list and above your head; other players' logos on servers that pass them on (opt-in).",
+					"de": "Spieler-Logo in der Tabliste und über deinem Kopf; Logos anderer Spieler auf Servern, die sie weitergeben (nur wenn du es erlaubst)."
+				},
+				{
+					"en": "Share codes: copy a preset as one line of text and import it with Paste. Missing packs are listed by name.",
+					"de": "Share-Codes: ein Preset als eine Textzeile kopieren und mit Einfügen importieren. Fehlende Packs werden mit Namen angezeigt."
+				},
+				{
+					"en": "Presets can keep your EXTRAS settings; duplicate button for presets.",
+					"de": "Presets können deine EXTRAS-Einstellungen mitspeichern; Duplizieren-Knopf für Presets."
+				},
+				{
+					"en": "Tool variants: use a pack's diamond or netherite design on both tiers (swords, axes, pickaxes, shovels, hoes, spears).",
+					"de": "Werkzeug-Varianten: das Diamant- oder Netherite-Design eines Packs auf beiden Stufen (Schwerter, Äxte, Spitzhacken, Schaufeln, Hacken, Speere)."
+				},
+				{
+					"en": "Block outline editor: live preview, colour presets, quick thickness and reset.",
+					"de": "Block-Umrandungs-Editor: Live-Vorschau, Farbvorlagen, schnelle Dicke und Zurücksetzen."
+				}
+			],
+			"changed": [
+				{
+					"en": "Settings are sorted into categories with a side menu.",
+					"de": "Die Einstellungen sind in Kategorien mit Seitenmenü sortiert."
+				},
+				{
+					"en": "The debug log is on by default (Settings → Privacy & debug).",
+					"de": "Das Debug-Log ist standardmäßig an (Einstellungen → Datenschutz & Debug)."
+				},
+				{
+					"en": "Smaller mod file: fonts trimmed to the characters the menu uses, smaller icon.",
+					"de": "Kleinere Mod-Datei: Schriften auf die genutzten Zeichen gekürzt, kleineres Icon."
+				}
+			],
+			"fixed": [
+				{
+					"en": "Textures were not applied with launchers that move the resource pack folder (Dawn/Feather, Prism, MultiMC): the generated pack now goes where Minecraft reads packs.",
+					"de": "Texturen wurden mit Launchern, die den Ressourcenpaket-Ordner verlegen (Dawn/Feather, Prism, MultiMC), nicht angewendet: Das erzeugte Pack landet jetzt dort, wo Minecraft Packs liest."
+				},
+				{
+					"en": "Preinstalled packs: one broken pack no longer stops the others; damaged copies are detected and logged.",
+					"de": "Vorinstallierte Packs: ein kaputtes Pack stoppt die anderen nicht mehr; beschädigte Kopien werden erkannt und geloggt."
+				}
+			],
+			"removed": [
+				{
+					"en": "Enemy HUD and the totem pop counter (information about other players).",
+					"de": "Gegner-HUD und Totem-Pop-Zähler (Informationen über andere Spieler)."
+				},
+				{
+					"en": "Texture collections for hearts, potions, the crosshair texture, snowballs, buckets, fishing rods, flint and steel, mount armor and shears (the crosshair editor stays).",
+					"de": "Textur-Kollektionen für Herzen, Tränke, die Fadenkreuz-Textur, Schneebälle, Eimer, Angeln, Feuerzeug, Reittier-Rüstung und Scheren (der Fadenkreuz-Editor bleibt)."
+				}
+			]
+		},
+		{
+			"version": "1.5.0",
+			"date": "2026-10-25",
+			"title": {
+				"en": "Fair play: the mod only shows what you can see yourself, and servers can switch features off.",
+				"de": "Fair Play: Die Mod zeigt nur, was du selbst sehen kannst, und Server können Funktionen abschalten."
+			},
+			"changed": [
+				{
+					"en": "Enemy HUD: no more health, exact distance, durability or enchantments of other players. It shows head, name, the armor and items you can see on them and the totem pops you saw.",
+					"de": "Gegner-HUD: kein Leben, keine genaue Entfernung, keine Haltbarkeit und keine Verzauberungen anderer Spieler mehr. Es zeigt Kopf, Name, die sichtbare Rüstung und Items und die Totem-Pops, die du gesehen hast."
+				},
+				{
+					"en": "Totem pop counter: only counts pops of players in your line of sight.",
+					"de": "Totem-Pop-Zähler: zählt nur Pops von Spielern in deiner Sichtlinie."
+				},
+				{
+					"en": "Item markers are only for your own items.",
+					"de": "Item-Markierungen gibt es nur für deine eigenen Items."
+				},
+				{
+					"en": "Fullbright no longer removes the Darkness effect; water stays at least 40 % visible in the opacity editor.",
+					"de": "Fullbright hebt den Dunkelheits-Effekt nicht mehr auf; Wasser bleibt im Transparenz-Editor mindestens 40 % sichtbar."
+				},
+				{
+					"en": "The Discord status is now off by default (turn it on in Settings).",
+					"de": "Der Discord-Status ist jetzt standardmäßig aus (in den Einstellungen einschaltbar)."
+				}
+			],
+			"added": [
+				{
+					"en": "Servers can switch off fullbright, the enemy HUD and the totem pop counter (toadsvisuals:server_rules packet).",
+					"de": "Server können Fullbright, das Gegner-HUD und den Totem-Pop-Zähler abschalten (Paket toadsvisuals:server_rules)."
+				},
+				{
+					"en": "Reset button for every EXTRAS module.",
+					"de": "Zurücksetzen-Knopf für jedes EXTRAS-Modul."
+				}
+			]
+		},
+		{
+			"version": "1.4.2",
+			"date": "2026-10-24",
+			"title": {
+				"en": "Fix: the generated resource pack always has clean JSON metadata.",
+				"de": "Fix: Das erzeugte Ressourcenpaket hat immer saubere JSON-Metadaten."
+			},
+			"fixed": [
+				{
+					"en": "pack.mcmeta is written by a JSON serializer and checked before the pack is used: valid UTF-8, no control characters, strict JSON. Formatting codes (§) and control characters in names and descriptions are removed.",
+					"de": "pack.mcmeta wird von einem JSON-Serializer geschrieben und geprüft, bevor das Pack benutzt wird: gültiges UTF-8, keine Steuerzeichen, striktes JSON. Formatierungscodes (§) und Steuerzeichen in Namen und Beschreibungen werden entfernt."
+				},
+				{
+					"en": "Animation .mcmeta files and other JSON from packs with comments, trailing commas, a byte order mark or raw control characters are written again as clean JSON; files that are not JSON are left out with a warning instead of breaking the reload.",
+					"de": "Animations-.mcmeta und anderes JSON aus Packs mit Kommentaren, überzähligen Kommas, Byte-Order-Mark oder rohen Steuerzeichen werden als sauberes JSON neu geschrieben; Dateien, die kein JSON sind, werden mit Warnung weggelassen, statt das Neuladen kaputtzumachen."
+				}
+			]
+		},
+		{
+			"version": "1.3.2",
+			"date": "2026-10-24",
+			"title": {
+				"en": "Fullbright, hit sounds, invisible shield and your own block outline.",
+				"de": "Fullbright, Hit-Sounds, unsichtbares Schild und deine eigene Block-Umrandung."
+			},
+			"added": [
+				{
+					"en": "CPvP essentials: Fullbright (strength 10–100 %, your brightness setting stays as it is).",
+					"de": "CPvP Essentials: Fullbright (Stärke 10–100 %, deine Helligkeits-Einstellung bleibt, wie sie ist)."
+				},
+				{
+					"en": "CPvP essentials: invisible shield – you see through your own shield in first person, also while blocking.",
+					"de": "CPvP Essentials: unsichtbares Schild – du siehst in der Ego-Sicht durch dein eigenes Schild, auch beim Blocken."
+				},
+				{
+					"en": "Hit sounds: 18 sounds or your own .ogg/.wav when you hit someone; only when the hit lands, only players, volume, pitch and pitch variation.",
+					"de": "Hit-Sounds: 18 Sounds oder deine eigene .ogg/.wav, wenn du jemanden schlägst; nur bei Treffern, nur Spieler, Lautstärke, Tonhöhe und Variation."
+				},
+				{
+					"en": "Block outline: your own colour or rainbow, thickness, opacity, a see-through fill, the block's shape or one box.",
+					"de": "Block-Umrandung: eigene Farbe oder Regenbogen, Dicke, Deckkraft, durchsichtige Füllung, Form des Blocks oder ein Kasten."
+				}
+			],
+			"changed": [
+				{
+					"en": "Bedrock and Ancient Debris moved from Crystal PvP to Blocks & world.",
+					"de": "Grundgestein und Antiker Schutt sind von Crystal PvP zu Blöcke & Welt umgezogen."
+				}
+			]
+		},
+		{
+			"version": "1.3.0",
+			"date": "2026-10-24",
+			"title": {
+				"en": "PvP modes, more textures, armor HUD and your own PvP HUD.",
+				"de": "PvP-Modi, mehr Texturen, Rüstungs-HUD und dein eigenes PvP-HUD."
+			},
+			"added": [
+				{
+					"en": "PvP modes in the PVP sidebar: Crystal PvP, Netherite Pot, Mace PvP, Sword PvP, Axe PvP, Cart PvP, Diamond Crystal and Spear PvP, each with the textures that mode uses.",
+					"de": "PvP-Modi in der PVP-Seitenleiste: Crystal PvP, Netherite Pot, Mace PvP, Sword PvP, Axe PvP, Cart PvP, Diamond Crystal und Spear PvP, jeweils mit den Texturen, die der Modus braucht."
+				},
+				{
+					"en": "New texture collections: Netherite Armor, Diamond Armor, Potions, TNT Cart, Rails, Fishing Rod, Buckets, Flint & Steel, Snowballs, Fireworks and Mount Armor (horse and nautilus).",
+					"de": "Neue Textur-Sammlungen: Netherite-Rüstung, Diamantrüstung, Tränke, TNT-Lore, Schienen, Angel, Eimer, Feuerzeug, Schneebälle, Feuerwerk und Reittier-Rüstung (Pferd und Nautilus)."
+				},
+				{
+					"en": "Armor HUD: your armor (and your hands if you want) with durability as percent, durability left, a bar or icons only; column or row, background and size; drag it in the chat.",
+					"de": "Rüstungs-HUD: deine Rüstung (und auf Wunsch deine Hände) mit Haltbarkeit in Prozent, als Restwert, als Balken oder nur Icons; Spalte oder Zeile, Hintergrund und Größe; im Chat verschiebbar."
+				},
+				{
+					"en": "PvP HUD: pick any items to count, potions by effect (healing, strength, speed, fire resistance), presets for every PvP mode, column or row, background, text and accent colour.",
+					"de": "PvP-HUD: beliebige Items zum Zählen, Tränke nach Effekt (Heilung, Stärke, Schnelligkeit, Feuerresistenz), Presets für jeden PvP-Modus, Spalte oder Zeile, Hintergrund, Text- und Akzentfarbe."
+				},
+				{
+					"en": "Enemy HUD: the totem pop counter in its own row, next to the name or as a badge on the head; background choice; weapon and off hand optional.",
+					"de": "Gegner-HUD: Totem-Pop-Zähler in eigener Zeile, neben dem Namen oder als Abzeichen auf dem Kopf; Hintergrund wählbar; Waffe und Nebenhand optional."
+				},
+				{
+					"en": "Item markers are now pixel icons and/or coloured frames, the same on your items and the enemy's; new: Lunge (spear) and Unbreaking.",
+					"de": "Item-Markierungen sind jetzt Pixel-Icons und/oder farbige Rahmen, gleich bei deinen Items und denen des Gegners; neu: Ausfall (Speer) und Haltbarkeit."
+				}
+			],
+			"fixed": [
+				{
+					"en": "Enemy HUD: the totem icon no longer overlaps the health bar, the health number fits inside the bar and long names are cut off.",
+					"de": "Gegner-HUD: Das Totem-Icon überdeckt die Lebensleiste nicht mehr, die Lebenszahl passt in die Leiste und lange Namen werden abgeschnitten."
+				},
+				{
+					"en": "Item marker letters now use the marker's colour; markers on the enemy's items in the enemy HUD.",
+					"de": "Buchstaben der Item-Markierungen nutzen jetzt deren Farbe; Markierungen direkt auf den Items des Gegners im Gegner-HUD."
+				}
+			]
+		},
+		{
+			"version": "1.2.0",
+			"date": "2026-10-24",
+			"title": {
+				"en": "Enemy HUD, item markers, particle switches and a cleaner PVP menu.",
+				"de": "Gegner-HUD, Item-Markierungen, Partikel-Schalter und ein aufgeräumteres PVP-Menü."
+			},
+			"added": [
+				{
+					"en": "Enemy HUD: the player you fight with head, distance, health and absorption, totem pop counter, armor and weapon with durability, and markers for dangerous items.",
+					"de": "Gegner-HUD: der Spieler, gegen den du kämpfst, mit Kopf, Entfernung, Leben und Absorption, Totem-Pop-Zähler, Rüstung und Waffe mit Haltbarkeit und Markierungen für gefährliche Items."
+				},
+				{
+					"en": "Totem pop counter resets when the player dies, with a key (\"Reset totem pop counter\" in Controls) or both.",
+					"de": "Der Totem-Pop-Zähler setzt sich zurück, wenn der Spieler stirbt, per Taste („Totem-Pop-Zähler zurücksetzen“ in der Steuerung) oder beides."
+				},
+				{
+					"en": "Move both HUDs: open the chat and drag them; right-click puts them back.",
+					"de": "Beide HUDs verschieben: Chat öffnen und ziehen; Rechtsklick setzt sie zurück."
+				},
+				{
+					"en": "Item markers: tags for Breach, Density and Wind Burst maces, Blast/Fire/Projectile Protection, Protection, Feather Falling, Thorns, Sharpness, Knockback, Fire Aspect and Mending – in the hotbar, inventories, tooltips and the enemy HUD.",
+					"de": "Item-Markierungen: Tags für Breach-, Dichte- und Windstoß-Streitkolben, Explosions-/Feuer-/Schusssicher, Schutz, Federfall, Dornen, Schärfe, Rückstoß, Verbrennung und Reparatur – in Hotbar, Inventaren, Tooltips und im Gegner-HUD."
+				},
+				{
+					"en": "Particles module: hide explosions, smoke, mace and wind charge wind, crits, sharpness sparkles, sword sweeps, damage hearts, totem particles, potion swirls, portal particles, fireworks, flames, rain, ash and falling leaves.",
+					"de": "Partikel-Modul: Explosionen, Rauch, Streitkolben- und Windkugel-Wind, Crits, Schärfe-Funken, Schwert-Schwung, Schadens-Herzen, Totem-Partikel, Trank-Wirbel, Portalpartikel, Feuerwerk, Flammen, Regen, Asche und fallende Blätter ausblenden."
+				},
+				{
+					"en": "Opacity editor for any item: add every item that has its own texture and set its transparency.",
+					"de": "Transparenz-Editor für jedes Item: jedes Item mit eigener Textur hinzufügen und seine Transparenz einstellen."
+				},
+				{
+					"en": "Hit colour on armor: armor of hurt players flashes in your colour too.",
+					"de": "Hit-Farbe auf Rüstung: Die Rüstung getroffener Spieler blinkt auch in deiner Farbe."
+				},
+				{
+					"en": "PvP HUD warnings: red pulsing screen edges when your health is low (from 1 to 10 hearts) and an alert when a piece of your armor drops below 10 %.",
+					"de": "PvP-HUD-Warnungen: rot pulsierende Bildschirmränder bei wenig Leben (ab 1 bis 10 Herzen) und ein Alarm, wenn ein Rüstungsteil unter 10 % fällt."
+				},
+				{
+					"en": "Totem pops in chat (optional): a line only you see when a player near you pops a totem, with their count.",
+					"de": "Totem-Pops im Chat (optional): eine Zeile nur für dich, wenn ein Spieler in deiner Nähe ein Totem poppt, mit Zähler."
+				}
+			],
+			"changed": [
+				{
+					"en": "PVP menu: sections in a sidebar on the left, the tiles of one section on the right; search looks through all sections.",
+					"de": "PVP-Menü: Bereiche in einer Seitenleiste links, rechts die Kacheln eines Bereichs; die Suche durchsucht alle Bereiche."
+				},
+				{
+					"en": "The totem pop sound of \"No totem pop sound\" is now inaudible instead of removed, so the pop counter still works.",
+					"de": "Der Totem-Pop-Sound bei „Kein Totem-Pop-Sound“ ist jetzt unhörbar statt entfernt, damit der Pop-Zähler weiter funktioniert."
+				}
+			],
+			"removed": [
+				{
+					"en": "Quick setups.",
+					"de": "Schnell-Setups."
+				}
+			]
+		},
+		{
+			"version": "1.1.0",
+			"date": "2026-10-23",
+			"title": {
+				"en": "More EXTRAS, a cleaner PVP menu and settings that always stay.",
+				"de": "Mehr EXTRAS, ein aufgeräumteres PVP-Menü und Einstellungen, die immer bleiben."
+			},
+			"added": [
+				{
+					"en": "Opacity editor: make fire, water, the underwater view, the pumpkin overlay, totems, golden apples, ender pearls, swords or the hotbar see-through (0–100 %).",
+					"de": "Transparenz-Editor: Feuer, Wasser, Unterwasser-Sicht, Kürbis-Overlay, Totems, Goldäpfel, Enderperlen, Schwerter oder die Hotbar durchsichtig machen (0–100 %)."
+				},
+				{
+					"en": "Glint styles: coloured, rainbow, waves, sparkle, solid or subtle, in any colour, with brightness and a live preview.",
+					"de": "Glint-Stile: farbig, Regenbogen, Wellen, Funkeln, einfarbig oder dezent, in jeder Farbe, mit Helligkeit und Live-Vorschau."
+				},
+				{
+					"en": "Item animation for kill effects: an item rises where the player died and can glow, spin, float up, fade out and leave particles; any of 16 items or the effect's own item, with size, duration and a live preview.",
+					"de": "Item-Animation für Kill-Effekte: Ein Item steigt am Todesort auf und kann leuchten, sich drehen, schweben, verblassen und Partikel hinterlassen; eins von 16 Items oder das Item des Effekts, mit Größe, Dauer und Live-Vorschau."
+				},
+				{
+					"en": "New kill effects: helix, light pillar, crystal pop, wind burst and \"only the item\"; effect volume.",
+					"de": "Neue Kill-Effekte: Helix, Lichtsäule, Kristall-Blitz, Windstoß und „Nur das Item“; Effekt-Lautstärke."
+				},
+				{
+					"en": "12 new kill sounds (victory, harp, banjo, flute, cowbell, XP orbs, glass, wind, anvil ring, trial key, anchor, villager); every sound and your own sounds can be previewed.",
+					"de": "12 neue Kill-Sounds (Sieg, Harfe, Banjo, Flöte, Kuhglocke, XP-Kugeln, Glas, Wind, Ambossklang, Prüfungsschlüssel, Anker, Dorfbewohner); jeder Sound und deine eigenen lassen sich vorhören."
+				},
+				{
+					"en": "Mob kills (optional): kill effects and kill sounds also when a mob you hit dies.",
+					"de": "Mob-Kills (optional): Kill-Effekte und -Sounds auch, wenn ein Mob stirbt, den du getroffen hast."
+				},
+				{
+					"en": "CPvP essentials: separate switches for crystal explosion visuals and smoke particles.",
+					"de": "CPvP Essentials: eigene Schalter für Kristall-Explosionen und Rauchpartikel."
+				},
+				{
+					"en": "PvP HUD: totems, crystals, golden apples, ender pearls and armor durability, in a corner of your choice and size.",
+					"de": "PvP-HUD: Totems, Kristalle, Goldäpfel, Enderperlen und Rüstungs-Haltbarkeit, in einer Ecke deiner Wahl und Größe."
+				},
+				{
+					"en": "Quick setups: Crystal PvP, Clear view, Fancy kills, Sword PvP, Purple glint and Everything off.",
+					"de": "Schnell-Setups: Kristall-PvP, Klare Sicht, Schicke Kills, Schwert-PvP, Lila Glint und Alles aus."
+				},
+				{
+					"en": "Colour picker and HEX field (#RRGGBB) for every colour setting.",
+					"de": "Farbwähler und HEX-Feld (#RRGGBB) für jede Farbeinstellung."
+				},
+				{
+					"en": "New collections: Ancient Debris (Crystal PvP) and Wind Charge (weapons).",
+					"de": "Neue Sammlungen: Antiker Schutt (Kristall-PvP) und Windkugel (Waffen)."
+				},
+				{
+					"en": "A short chat message the first time you join a world.",
+					"de": "Eine kurze Chat-Nachricht, wenn du das erste Mal eine Welt betrittst."
+				}
+			],
+			"changed": [
+				{
+					"en": "The menu opens with O (was L, which Minecraft also uses for advancements). If you still had L, it moves to O once.",
+					"de": "Das Menü öffnet sich mit O (vorher L, das Minecraft auch für Fortschritte nutzt). Wer noch L hatte, wird einmal auf O umgestellt."
+				},
+				{
+					"en": "PVP home in sections (Crystal PvP, weapons & armor, HUD & screen, blocks & world, items & tools) that open and close, with jump buttons, progress per section and \"Reset all\".",
+					"de": "PVP-Startseite in Bereichen (Kristall-PvP, Waffen & Rüstung, HUD & Bildschirm, Blöcke & Welt, Items & Werkzeuge), die sich auf- und zuklappen lassen, mit Sprung-Knöpfen, Fortschritt pro Bereich und „Alles zurücksetzen“."
+				},
+				{
+					"en": "Your textures and settings stay across game starts: if the generated pack is missing, switched off or older than your choices, it is written again at the start.",
+					"de": "Deine Texturen und Einstellungen bleiben über Neustarts: Fehlt das erzeugte Pack, ist es aus oder älter als deine Auswahl, wird es beim Start neu geschrieben."
+				},
+				{
+					"en": "Mace collection without wind charges (they have their own collection now).",
+					"de": "Streitkolben-Sammlung ohne Windkugeln (die haben jetzt eine eigene)."
+				}
+			],
+			"fixed": [
+				{
+					"en": "Settings are saved when the menu closes, also changes still being typed.",
+					"de": "Einstellungen werden beim Schließen des Menüs gespeichert, auch gerade getippte Änderungen."
+				}
+			],
+			"removed": [
+				{
+					"en": "Private packs and packs whose makers did not allow it are no longer shipped or unpacked.",
+					"de": "Private Packs und Packs, deren Ersteller es nicht erlaubt haben, werden nicht mehr mitgeliefert oder entpackt."
+				}
+			]
+		},
+		{
+			"version": "1.0.0",
+			"date": "2026-10-22",
+			"title": {
+				"en": "The first release of Toad's Visuals: your PvP visuals in one menu.",
+				"de": "Die erste Version von Toad's Visuals: deine PvP-Visuals in einem Menü."
+			},
+			"added": [
+				{
+					"en": "PVP tab: one tile per collection (crystal, anchor, obsidian, totem, pearl, gapple, sword, axe, mace, armor, shield, bow, hotbar, crosshair, hearts, inventory, glint, fire and more), each showing the style you use now.",
+					"de": "PVP-Tab: eine Kachel pro Kategorie (Kristall, Anker, Obsidian, Totem, Perle, Gapple, Schwert, Axt, Streitkolben, Rüstung, Schild, Bogen, Hotbar, Fadenkreuz, Herzen, Inventar, Glint, Feuer und mehr), jede zeigt den Style, den du gerade benutzt."
+				},
+				{
+					"en": "One card per pack with a live 3D preview and a big turntable preview. Click a card to use it, click it again to go back to vanilla, right-click to only look at it.",
+					"de": "Eine Karte pro Pack mit 3D-Vorschau und eine große drehbare Vorschau. Karte anklicken = benutzen, nochmal anklicken = zurück zu Vanilla, Rechtsklick = nur ansehen."
+				},
+				{
+					"en": "Fire in 3D, burning on netherrack like in the game, or 2D. Armor and glint as diamond, netherite or both.",
+					"de": "Feuer in 3D, brennt auf Netherrack wie im Spiel, oder 2D. Rüstung und Glint als Diamant, Netherit oder beides."
+				},
+				{
+					"en": "Filters (All, Yours, Preinstalled, Favorites), sorting, suggestions, single textures from any pack and presets.",
+					"de": "Filter (Alle, Deine, Vorinstalliert, Favoriten), Sortierung, Vorschläge, einzelne Texturen aus jedem Pack und Presets."
+				},
+				{
+					"en": "Kill effects: lightning, gravestone, smoke, firework, totem, souls, hearts, explosion, flames, ender, confetti, shockwave and more, with size, colour, sound and trigger.",
+					"de": "Kill-Effekte: Blitz, Grabstein, Rauch, Feuerwerk, Totem, Seelen, Herzen, Explosion, Flammen, Ender, Konfetti, Schockwelle und mehr, mit Größe, Farbe, Sound und Auslöser."
+				},
+				{
+					"en": "Kill sounds: 14 sounds or your own .ogg/.wav sound, with volume and pitch.",
+					"de": "Kill-Sounds: 14 Sounds oder dein eigener .ogg/.wav-Sound, mit Lautstärke und Tonhöhe."
+				},
+				{
+					"en": "CPvP essentials: no totem pop sound, no crystal sounds, small shield, small golden apples and totem, smaller totem pop animation, no pumpkin overlay and no hurt camera shake.",
+					"de": "CPvP Essentials: kein Totem-Pop-Sound, keine Kristall-Sounds, kleines Schild, kleine Goldäpfel und Totem, kleinere Totem-Pop-Animation, kein Kürbis-Overlay und kein Wackeln bei Schaden."
+				},
+				{
+					"en": "Crosshair editor: cross, dot, circle, T, X or square with gap, length, thickness, colour, opacity and outline.",
+					"de": "Fadenkreuz-Editor: Kreuz, Punkt, Kreis, T, X oder Quadrat mit Abstand, Länge, Dicke, Farbe, Deckkraft und Umrandung."
+				},
+				{
+					"en": "Hit colour: players and mobs flash in your colour instead of red when they are hurt.",
+					"de": "Hit-Farbe: Spieler und Mobs blinken in deiner Farbe statt rot, wenn sie Schaden bekommen."
+				},
+				{
+					"en": "Cosmetics: your own cape images (add many at once or a whole folder) and a cape generator. Nothing is downloaded.",
+					"de": "Kosmetik: deine eigenen Cape-Bilder (viele auf einmal oder einen ganzen Ordner) und ein Cape-Generator. Es wird nichts heruntergeladen."
+				},
+				{
+					"en": "Your own look: six styles, six menu fonts, text and accent colour, window size and a background image.",
+					"de": "Dein eigenes Aussehen: sechs Stile, sechs Menü-Schriften, Text- und Akzentfarbe, Fenstergröße und ein Hintergrundbild."
+				},
+				{
+					"en": "Discord: \"Talk with me on Discord\" (discord.gg/mariomods) and a Discord status. English and German.",
+					"de": "Discord: „Talk with me on Discord“ (discord.gg/mariomods) und ein Discord-Status. Englisch und Deutsch."
+				}
+			]
+		}
+	]
+}

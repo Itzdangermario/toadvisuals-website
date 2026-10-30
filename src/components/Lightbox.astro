@@ -1,0 +1,100 @@
+---
+/** Large view for gallery pictures: any link with data-lightbox opens in a dialog with previous / next. */
+---
+<dialog class="lb" data-lb aria-label="Screenshot">
+  <figure>
+    <img data-lb-img alt="" />
+    <figcaption data-lb-cap></figcaption>
+  </figure>
+  <button class="lb-btn prev" type="button" data-lb-prev aria-label="Previous picture">‹</button>
+  <button class="lb-btn next" type="button" data-lb-next aria-label="Next picture">›</button>
+  <button class="lb-btn close" type="button" data-lb-close aria-label="Close">×</button>
+</dialog>
+
+<script>
+  const dlg = document.querySelector<HTMLDialogElement>('[data-lb]');
+  if (dlg) {
+    const img = dlg.querySelector<HTMLImageElement>('[data-lb-img]')!;
+    const cap = dlg.querySelector<HTMLElement>('[data-lb-cap]')!;
+    let items: HTMLAnchorElement[] = [];
+    let i = 0;
+    const show = (n: number) => {
+      i = (n + items.length) % items.length;
+      const a = items[i];
+      img.src = a.href;
+      img.alt = a.querySelector('img')?.alt ?? '';
+      cap.textContent = a.dataset.caption ?? '';
+    };
+    document.addEventListener('click', (e) => {
+      const a = (e.target as HTMLElement).closest<HTMLAnchorElement>('a[data-lightbox]');
+      if (!a || !dlg.showModal) return;
+      e.preventDefault();
+      items = [...document.querySelectorAll<HTMLAnchorElement>(`a[data-lightbox="${a.dataset.lightbox}"]`)];
+      show(items.indexOf(a));
+      dlg.showModal();
+    });
+    dlg.querySelector('[data-lb-prev]')!.addEventListener('click', () => show(i - 1));
+    dlg.querySelector('[data-lb-next]')!.addEventListener('click', () => show(i + 1));
+    dlg.querySelector('[data-lb-close]')!.addEventListener('click', () => dlg.close());
+    dlg.addEventListener('click', (e) => e.target === dlg && dlg.close());
+    dlg.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowLeft') show(i - 1);
+      if (e.key === 'ArrowRight') show(i + 1);
+    });
+  }
+</script>
+
+<style>
+  .lb {
+    width: min(1200px, 94vw);
+    max-height: 92vh;
+    padding: 0;
+    border: 1px solid var(--line);
+    border-radius: 18px;
+    background: var(--night-2);
+    color: var(--ink);
+    overflow: hidden;
+  }
+  .lb::backdrop {
+    background: rgba(6, 3, 12, 0.82);
+    backdrop-filter: blur(6px);
+  }
+  figure {
+    margin: 0;
+  }
+  img {
+    display: block;
+    width: 100%;
+    max-height: 80vh;
+    object-fit: contain;
+    background: #000;
+  }
+  figcaption {
+    padding: 14px 64px 16px 18px;
+    font-weight: 650;
+  }
+  .lb-btn {
+    position: absolute;
+    width: 46px;
+    height: 46px;
+    border-radius: 50%;
+    border: 1px solid var(--line);
+    background: rgba(14, 10, 22, 0.75);
+    color: #fff;
+    font-size: 1.6rem;
+    line-height: 1;
+    cursor: pointer;
+  }
+  .prev {
+    left: 12px;
+    top: 40%;
+  }
+  .next {
+    right: 12px;
+    top: 40%;
+  }
+  .close {
+    right: 12px;
+    top: 12px;
+  }
+</style>

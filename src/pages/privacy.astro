@@ -1,0 +1,242 @@
+---
+import Base from '../layouts/Base.astro';
+import { legal, site } from '../data/site';
+import { formatDate } from '../lib/releases';
+
+const hasAddress = legal.name !== '' && legal.address.length > 0;
+if (!hasAddress) {
+  console.warn('\n[legal] No operator name/address in src/data/site.ts (legal). That is fine for privacy, but check whether your website needs an imprint with an address (see the note there).\n');
+}
+---
+<Base
+  title="Privacy policy"
+  description="What data the Toad's Visuals website and mod process, why, and your rights."
+>
+  <section class="page-hero">
+    <div class="glow" aria-hidden="true"></div>
+    <div class="wrap">
+      <h1>Privacy policy</h1>
+      <p class="lead">Last updated {formatDate(legal.privacyUpdated)}.</p>
+    </div>
+  </section>
+
+  <div class="wrap section-body">
+    <div class="summary glass">
+      <h2>In short</h2>
+      <ul>
+        <li>This website sets no cookies and uses no analytics, tracking, ads or embedded content from other companies.</li>
+        <li>The live numbers (players online, downloads) are loaded from our database at Supabase; a download click adds 1 to a counter, without any personal data.</li>
+        <li>Our host, Cloudflare, processes technical data such as your IP address to deliver the website.</li>
+        <li>The mod has no telemetry. Its logo sync stores your Minecraft UUID and can be switched off.</li>
+      </ul>
+    </div>
+
+    <article class="prose">
+      <h2 id="controller">1. Who is responsible</h2>
+      {
+        hasAddress ? (
+          <>
+            <p>The person responsible for data processing on this website (controller under the GDPR) is:</p>
+            <p class="address">
+              {legal.name}
+              {legal.address.map((line) => (
+                <>
+                  <br />
+                  {line}
+                </>
+              ))}
+            </p>
+          </>
+        ) : (
+          <p>This website and the Toad’s Visuals mod are run by the Toad’s Visuals team.</p>
+        )
+      }
+      <p>
+        You can reach us {legal.email && <>by email at <a href={`mailto:${legal.email}`}>{legal.email}</a> or </>}on our{' '}
+        <a href={site.links.discord} target="_blank" rel="noopener">Discord server</a>. See also the <a href="/imprint/">imprint</a>.
+      </p>
+
+      <h2 id="hosting">2. Hosting and server logs</h2>
+      <p>
+        This website is hosted by Cloudflare Pages, a service of Cloudflare, Inc., 101 Townsend St, San Francisco, CA 94107,
+        USA. When you open a page or download a file, your browser automatically sends technical information that Cloudflare
+        processes to deliver the website and to protect it against attacks and misuse:
+      </p>
+      <ul>
+        <li>your IP address</li>
+        <li>date and time of the request</li>
+        <li>the page or file requested and the amount of data transferred</li>
+        <li>the website you came from (referrer), if your browser sends it</li>
+        <li>browser type, version and operating system (user agent)</li>
+      </ul>
+      <p>
+        The legal basis is Art. 6(1)(f) GDPR: our legitimate interest in a secure, reliable and fast website. We do not
+        combine this data with other data and do not use it to identify you. Cloudflare may process data outside the European
+        Union. How long Cloudflare keeps this data and how it protects transfers is described in
+        <a href="https://www.cloudflare.com/privacypolicy/" target="_blank" rel="noopener">Cloudflare’s privacy policy</a>.
+      </p>
+
+      <h2 id="cookies">3. Cookies and local storage</h2>
+      <p>
+        This website does not set any cookies. When you click a download button, the site notes in your browser’s session
+        storage that this file was already counted, so the counter does not count it twice; this note is deleted when you
+        close the tab and never leaves your browser.
+        If Cloudflare’s security systems check a request (for example during an attack), Cloudflare may set a short-lived,
+        technically necessary cookie for that purpose.
+      </p>
+
+      <h2 id="analytics">4. Analytics and third-party content</h2>
+      <p>
+        We do not use analytics, tracking pixels, advertising or social media plugins. Fonts, images and scripts are
+        loaded from this website itself, so opening a page does not contact companies such as Google. The only other
+        service the website talks to is our database for the live numbers (see the next section).
+      </p>
+      <p>
+        The mod files themselves are hosted at Dropbox (Dropbox, Inc., USA, and Dropbox International Unlimited Company,
+        Ireland). Dropbox is only contacted when you click a download button: your browser then fetches the file directly
+        from Dropbox, which processes technical data such as your IP address to deliver it. See
+        <a href="https://www.dropbox.com/privacy" target="_blank" rel="noopener">Dropbox’s privacy policy</a>.
+      </p>
+
+      <h2 id="stats">5. Live numbers and download counter</h2>
+      <p>
+        The home and download pages show how many players are playing with Toad’s Visuals right now, how many players there
+        are in total and how often the mod was downloaded. To show these numbers, your browser loads them from our database,
+        hosted by Supabase, Inc. (USA). Like every web server, Supabase processes technical data such as your IP address
+        to answer the request; see <a href="https://supabase.com/privacy" target="_blank" rel="noopener">Supabase’s privacy
+        policy</a>. The player numbers are counted from the mod’s logo sync list (section 8); no names are shown.
+      </p>
+      <p>
+        When you click a download button, your browser tells the database to add 1 to the counter of that version. Only the
+        version and the Minecraft version are stored, together with the number of downloads – no IP address, no cookie, no
+        identifier. The legal basis is Art. 6(1)(f) GDPR: our legitimate interest in showing how the mod is used.
+      </p>
+
+      <h2 id="links">6. Links to other websites</h2>
+      <p>
+        This website links to other services, for example Discord, Modrinth and the Fabric website. They only receive data
+        when you click such a link and open their site. From then on, their own privacy policies apply.
+      </p>
+
+      <h2 id="contact">7. Contacting us</h2>
+      <p>
+        If you contact us (for example by email or on Discord), we use your message and contact details only to answer you. The legal basis is Art. 6(1)(f)
+        GDPR, or Art. 6(1)(b) GDPR if your message concerns a contract. We delete the messages when they are no longer needed,
+        unless we must keep them by law.
+      </p>
+
+      <h2 id="mod">8. The Toad’s Visuals mod</h2>
+      <p>
+        The mod has no telemetry: it does not send statistics, play time, your packs or your settings anywhere. Your settings
+        stay on your computer in <code>config/toadsvisuals</code>. A few features do exchange data, and only for what they do:
+      </p>
+      <h3>Logo sync</h3>
+      <p>
+        Logo sync shows the Toad’s Visuals logo of players of the mod to each other. It is on by default and can be switched
+        off at any time in the mod under Settings → Privacy → Logo sync. While it is on:
+      </p>
+      <ul>
+        <li>
+          the mod asks Mojang’s session server to confirm that you own your Minecraft account, the same check that happens when
+          you join an online-mode server (Mojang’s and Microsoft’s privacy terms apply to this request);
+        </li>
+        <li>
+          the mod sends your Minecraft name and a random one-time code to our online list. The list checks the code with Mojang
+          and then stores your <strong>Minecraft UUID</strong>, your logo type and the <strong>time of your last check-in</strong>;
+        </li>
+        <li>
+          while you play, this check-in is repeated every five minutes. It keeps your logo visible and is used to show how many
+          players of the mod are online;
+        </li>
+        <li>
+          the mod loads the list of all players with a logo. This list (UUIDs, logo types and check-in times) can be read by
+          every copy of the mod.
+        </li>
+      </ul>
+      <p>
+        The online list is hosted by Supabase, Inc. (USA), which also processes technical request data such as IP addresses;
+        see <a href="https://supabase.com/privacy" target="_blank" rel="noopener">Supabase’s privacy policy</a>. Your Minecraft
+        login token is never sent to us. Switching logo sync off removes your entry. Entries that are not refreshed for 60 days
+        are no longer shown, and you can ask us to delete your entry at any time. The legal basis is Art. 6(1)(f) GDPR: our
+        legitimate interest in showing the logo feature to players of the mod, which you can object to by switching it off.
+      </p>
+      <h3>Other features</h3>
+      <ul>
+        <li>
+          <strong>Discord status</strong> (off by default) only talks to the Discord app on your own computer, which then shows
+          the status on your profile. Discord’s privacy policy applies.
+        </li>
+        <li>
+          <strong>Nick with another player’s skin</strong>: when you choose a skin, Minecraft looks up that player name and
+          loads the skin from Mojang, as it does for player heads.
+        </li>
+        <li>
+          <strong>Share my player logo</strong> (off by default): on servers that support it, the mod tells the server which logo
+          you use, and nothing else.
+        </li>
+      </ul>
+
+      <h2 id="rights">9. Your rights</h2>
+      <p>Under the GDPR you have the right to:</p>
+      <ul>
+        <li>access the data we hold about you (Art. 15),</li>
+        <li>have incorrect data corrected (Art. 16),</li>
+        <li>have your data deleted (Art. 17) or its processing restricted (Art. 18),</li>
+        <li>receive your data in a common format (Art. 20),</li>
+        <li>object to processing based on legitimate interests (Art. 21),</li>
+        <li>complain to a data protection supervisory authority (Art. 77).</li>
+      </ul>
+      <p>To use these rights, contact us as described in section 1.</p>
+
+      <h2 id="changes">10. Changes</h2>
+      <p>
+        We update this policy when the website or the mod changes. The date at the top shows the latest version. The current
+        version is always at <a href="/privacy/">{site.domain}/privacy</a>.
+      </p>
+    </article>
+  </div>
+</Base>
+
+<style>
+  .section-body {
+    display: grid;
+    gap: 40px;
+    padding-bottom: clamp(64px, 9vw, 120px);
+  }
+
+  .summary {
+    padding: clamp(20px, 3vw, 30px);
+    max-width: 760px;
+  }
+
+  .summary h2 {
+    font-size: var(--step-1);
+    font-family: var(--font-body);
+    font-weight: 750;
+    margin-bottom: 10px;
+  }
+
+  .summary ul {
+    margin: 0;
+    padding-left: 1.2em;
+    display: grid;
+    gap: 6px;
+    color: #dcd4e8;
+  }
+
+  .prose h2 {
+    margin-top: 2em;
+    scroll-margin-top: 96px;
+  }
+
+  .prose h2:first-child {
+    margin-top: 0;
+  }
+
+  .address {
+    padding: 16px 20px;
+    border-left: 2px solid var(--purple);
+    background: rgba(167, 85, 255, 0.06);
+    border-radius: 0 12px 12px 0;
+  }
+</style>

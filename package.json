@@ -1,0 +1,21 @@
+{
+  "name": "toadvisuals-website",
+  "type": "module",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "node scripts/generate-redirects.mjs && astro dev",
+    "build": "node scripts/generate-redirects.mjs && astro build && node scripts/clean-dist.mjs",
+    "preview": "astro preview",
+    "check-links": "node scripts/check-site.mjs"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "dependencies": {
+    "@astrojs/sitemap": "3.7.4",
+    "@fontsource-variable/fredoka": "5.3.0",
+    "@fontsource-variable/manrope": "5.3.0",
+    "astro": "5.18.2"
+  }
+}

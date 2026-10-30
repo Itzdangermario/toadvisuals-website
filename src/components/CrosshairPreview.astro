@@ -1,0 +1,500 @@
+---
+/**
+ * Live crosshair preview. The shapes are made with the same algorithm as the mod's crosshair editor
+ * (Crosshair.mask in the mod's source), so what you see here is what the mod draws.
+ */
+const styles = ['Cross', 'Cross + dot', 'Dot', 'Circle', 'Circle + dot', 'T', 'X', 'Square'];
+const colours = [
+  { name: 'White', hex: '#ffffff' },
+  { name: 'Purple', hex: '#a755ff' },
+  { name: 'Lilac', hex: '#c77dff' },
+  { name: 'Green', hex: '#55ff55' },
+  { name: 'Aqua', hex: '#55ffff' },
+  { name: 'Red', hex: '#ff5555' },
+  { name: 'Yellow', hex: '#ffff55' },
+];
+---
+<div class="xh glass" data-xh>
+  <div class="stage">
+    <div class="scene" aria-hidden="true"></div>
+    <canvas class="zoom" width="294" height="294" role="img" aria-label="Crosshair preview, enlarged" data-xh-canvas></canvas>
+    <figure class="actual">
+      <canvas width="98" height="98" aria-hidden="true" data-xh-actual></canvas>
+      <figcaption>Actual size at GUI scale 2</figcaption>
+    </figure>
+  </div>
+
+  <form class="controls" data-xh-form onsubmit="return false">
+    <fieldset>
+      <legend>Shape</legend>
+      <div class="styles">
+        {
+          styles.map((s, i) => (
+            <label class="style">
+              <input type="radio" name="style" value={i} checked={i === 0} />
+              <canvas width="44" height="44" data-xh-icon={i} aria-hidden="true" />
+              <span>{s}</span>
+            </label>
+          ))
+        }
+      </div>
+    </fieldset>
+
+    <div class="sliders">
+      <label>
+        <span>Gap <output data-out="gap">2</output></span>
+        <input type="range" name="gap" min="0" max="8" value="2" />
+      </label>
+      <label>
+        <span>Length <output data-out="len">4</output></span>
+        <input type="range" name="len" min="1" max="10" value="4" />
+      </label>
+      <label>
+        <span>Thickness <output data-out="t">1</output></span>
+        <input type="range" name="t" min="1" max="3" value="1" />
+      </label>
+      <label>
+        <span>Opacity <output data-out="opacity">100</output>%</span>
+        <input type="range" name="opacity" min="20" max="100" value="100" />
+      </label>
+    </div>
+
+    <fieldset>
+      <legend>Colour</legend>
+      <div class="swatches">
+        {
+          colours.map((c, i) => (
+            <label class="swatch" title={c.name}>
+              <input type="radio" name="colour" value={c.hex} checked={i === 0} />
+              <span style={`background:${c.hex}`} />
+              <span class="sr-only">{c.name}</span>
+            </label>
+          ))
+        }
+        <label class="swatch custom" title="Any colour">
+          <input type="color" name="custom" value="#ffffff" aria-label="Pick any colour" />
+        </label>
+      </div>
+    </fieldset>
+
+    <label class="toggle">
+      <input type="checkbox" name="outline" checked />
+      <span>Black outline</span>
+    </label>
+  </form>
+</div>
+
+<script>
+  const R = 24;
+  const N = 2 * R + 1;
+
+  // Port of Crosshair.mask(style, gap, len, t) from the mod.
+  function mask(style: number, gap: number, len: number, t: number): boolean[][] {
+    const m: boolean[][] = Array.from({ length: N }, () => new Array(N).fill(false));
+    const lo = Math.floor((t - 1) / 2);
+    const hi = t - 1 - lo;
+    const cross = style === 0 || style === 1 || style === 5;
+    const dot = style === 1 || style === 2 || style === 4;
+    const ring = style === 3 || style === 4;
+    const size = gap + len;
+    for (let dy = -R; dy <= R; dy++) {
+      for (let dx = -R; dx <= R; dx++) {
+        let on = false;
+        const bandX = dx >= -lo && dx <= hi;
+        const bandY = dy >= -lo && dy <= hi;
+        if (cross) {
+          const right = bandY && dx >= hi + 1 + gap && dx <= hi + gap + len;
+          const left = bandY && dx <= -lo - 1 - gap && dx >= -lo - gap - len;
+          const down = bandX && dy >= hi + 1 + gap && dy <= hi + gap + len;
+          const up = bandX && dy <= -lo - 1 - gap && dy >= -lo - gap - len;
+          on = right || left || down || (up && style !== 5) || (gap === 0 && bandX && bandY);
+        }
+        if (dot && bandX && bandY) on = true;
+        if (ring) {
+          const d = Math.sqrt(dx * dx + dy * dy);
+          const radius = Math.max(2, size);
+          if (Math.abs(d - radius) <= (t - 1) / 2 + 0.5) on = true;
+        }
+        if (style === 6) {
+          const ax = Math.abs(dx);
+          const ay = Math.abs(dy);
+          const k = Math.max(ax, ay);
+          if (Math.abs(ax - ay) <= t - 1 && k >= gap + 1 && k <= gap + len) on = true;
+          if (gap === 0 && ax <= lo && ay <= lo) on = true;
+        }
+        if (style === 7) {
+          const k = Math.max(Math.abs(dx), Math.abs(dy));
+          const outer = Math.max(2, size);
+          if (k <= outer && k > outer - t) on = true;
+        }
+        m[dy + R][dx + R] = on;
+      }
+    }
+    return m;
+  }
+
+  // The outline: every free pixel next to a pixel of the shape (as in the mod).
+  function outline(m: boolean[][]): boolean[][] {
+    const o: boolean[][] = Array.from({ length: N }, () => new Array(N).fill(false));
+    for (let y = 0; y < N; y++)
+      for (let x = 0; x < N; x++) {
+        if (m[y][x]) continue;
+        search: for (let dy = -1; dy <= 1; dy++)
+          for (let dx = -1; dx <= 1; dx++) {
+            const nx = x + dx;
+            const ny = y + dy;
+            if (nx >= 0 && ny >= 0 && nx < N && ny < N && m[ny][nx]) {
+              o[y][x] = true;
+              break search;
+            }
+          }
+      }
+    return o;
+  }
+
+  interface Opts {
+    style: number;
+    gap: number;
+    len: number;
+    t: number;
+    opacity: number;
+    colour: string;
+    outline: boolean;
+  }
+
+  function draw(canvas: HTMLCanvasElement, o: Opts, crop = 0) {
+    const dpr = window.devicePixelRatio || 1;
+    const css = canvas.getBoundingClientRect().width || canvas.width;
+    const cells = N - 2 * crop;
+    const cell = Math.max(1, Math.floor((css * dpr) / cells));
+    canvas.width = canvas.height = cells * cell;
+    const ctx = canvas.getContext('2d')!;
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    const m = mask(o.style, o.gap, o.len, o.t);
+    const paint = (g: boolean[][], fill: string) => {
+      ctx.fillStyle = fill;
+      for (let y = crop; y < N - crop; y++)
+        for (let x = crop; x < N - crop; x++) if (g[y][x]) ctx.fillRect((x - crop) * cell, (y - crop) * cell, cell, cell);
+    };
+    if (o.outline) paint(outline(m), `rgba(0,0,0,${(Math.round((o.opacity / 100) * 200) / 255).toFixed(3)})`);
+    const a = Math.round((o.opacity / 100) * 255) / 255;
+    const hex = o.colour.replace('#', '');
+    const r = parseInt(hex.slice(0, 2), 16);
+    const g = parseInt(hex.slice(2, 4), 16);
+    const b = parseInt(hex.slice(4, 6), 16);
+    paint(m, `rgba(${r},${g},${b},${a})`);
+  }
+
+  document.querySelectorAll<HTMLElement>('[data-xh]').forEach((root) => {
+    const form = root.querySelector<HTMLFormElement>('[data-xh-form]')!;
+    const zoom = root.querySelector<HTMLCanvasElement>('[data-xh-canvas]')!;
+    const actual = root.querySelector<HTMLCanvasElement>('[data-xh-actual]')!;
+    const custom = form.elements.namedItem('custom') as HTMLInputElement;
+
+    const read = (): Opts => {
+      const f = new FormData(form);
+      return {
+        style: Number(f.get('style') ?? 0),
+        gap: Number(f.get('gap')),
+        len: Number(f.get('len')),
+        t: Number(f.get('t')),
+        opacity: Number(f.get('opacity')),
+        colour: String(f.get('colour') ?? custom.value),
+        outline: f.get('outline') === 'on',
+      };
+    };
+
+    const render = () => {
+      const o = read();
+      for (const k of ['gap', 'len', 't', 'opacity'] as const) {
+        const out = root.querySelector(`[data-out="${k}"]`);
+        if (out) out.textContent = String(o[k]);
+      }
+      draw(zoom, o, 0);
+      // actual size: one crosshair pixel = 2 screen pixels
+      const dpr = window.devicePixelRatio || 1;
+      actual.width = actual.height = Math.round(N * 2 * dpr);
+      actual.style.width = actual.style.height = `${N * 2}px`;
+      const ctx = actual.getContext('2d')!;
+      const tmp = document.createElement('canvas');
+      tmp.style.width = `${N * 2}px`;
+      draw(tmp, o, 0);
+      ctx.imageSmoothingEnabled = false;
+      ctx.clearRect(0, 0, actual.width, actual.height);
+      ctx.drawImage(tmp, 0, 0, actual.width, actual.height);
+      zoom.setAttribute(
+        'aria-label',
+        `Crosshair preview: ${['Cross', 'Cross + dot', 'Dot', 'Circle', 'Circle + dot', 'T', 'X', 'Square'][o.style]}, gap ${o.gap}, length ${o.len}, thickness ${o.t}`,
+      );
+    };
+
+    // shape buttons show their own shape
+    root.querySelectorAll<HTMLCanvasElement>('[data-xh-icon]').forEach((c) => {
+      const style = Number(c.dataset.xhIcon);
+      c.style.width = c.style.height = '44px';
+      draw(c, { style, gap: 2, len: 4, t: 1, opacity: 100, colour: '#f3eefa', outline: false }, 13);
+    });
+
+    form.addEventListener('input', (e) => {
+      const t = e.target as HTMLInputElement;
+      if (t.name === 'custom') {
+        form.querySelectorAll<HTMLInputElement>('input[name="colour"]').forEach((r) => (r.checked = false));
+      }
+      render();
+    });
+    window.addEventListener('resize', render, { passive: true });
+    render();
+  });
+</script>
+
+<style>
+  .xh {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr);
+    overflow: hidden;
+  }
+
+  .stage {
+    position: relative;
+    display: grid;
+    place-items: center;
+    min-height: 380px;
+    padding: 28px;
+    border-right: 1px solid var(--line);
+    isolation: isolate;
+    overflow: hidden;
+  }
+
+  /* a soft, out-of-focus "game view" behind the crosshair (no game textures) */
+  .scene {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background:
+      radial-gradient(60% 45% at 50% 100%, rgba(84, 140, 70, 0.55), transparent 70%),
+      linear-gradient(to bottom, #6d8fd6 0%, #9db7ea 46%, #6c8a4e 46.5%, #4b6a36 100%);
+    filter: blur(6px) saturate(0.85) brightness(0.72);
+    transform: scale(1.1);
+  }
+
+  .zoom {
+    width: min(294px, 100%);
+    aspect-ratio: 1;
+    image-rendering: pixelated;
+  }
+
+  .actual {
+    position: absolute;
+    right: 14px;
+    bottom: 12px;
+    margin: 0;
+    display: grid;
+    justify-items: end;
+    gap: 2px;
+  }
+
+  .actual canvas {
+    image-rendering: pixelated;
+  }
+
+  .actual figcaption {
+    font-size: 0.75rem;
+    color: rgba(255, 255, 255, 0.85);
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.6);
+  }
+
+  .controls {
+    display: grid;
+    gap: 22px;
+    padding: clamp(20px, 3vw, 32px);
+  }
+
+  fieldset {
+    border: 0;
+    margin: 0;
+    padding: 0;
+    min-width: 0;
+  }
+
+  legend,
+  .sliders span {
+    font-weight: 700;
+    font-size: 0.95rem;
+    margin-bottom: 10px;
+    padding: 0;
+  }
+
+  .styles {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 8px;
+  }
+
+  .style {
+    position: relative;
+    display: grid;
+    justify-items: center;
+    gap: 4px;
+    padding: 10px 4px 8px;
+    border-radius: var(--r-control);
+    border: 1px solid var(--line-soft);
+    background: rgba(243, 238, 250, 0.03);
+    cursor: pointer;
+    font-size: 0.78rem;
+    color: var(--muted);
+    text-align: center;
+    line-height: 1.2;
+    transition:
+      border-color 0.2s,
+      background-color 0.2s;
+  }
+
+  .style canvas {
+    width: 44px;
+    height: 44px;
+    image-rendering: pixelated;
+  }
+
+  .style input,
+  .swatch input[type='radio'] {
+    position: absolute;
+    opacity: 0;
+    inset: 0;
+    margin: 0;
+    cursor: pointer;
+  }
+
+  .style:has(input:checked) {
+    border-color: var(--purple);
+    background: rgba(167, 85, 255, 0.16);
+    color: var(--ink);
+  }
+
+  .style:has(input:focus-visible),
+  .swatch:has(input:focus-visible) {
+    outline: 2px solid var(--lilac);
+    outline-offset: 2px;
+  }
+
+  .sliders {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px 20px;
+  }
+
+  .sliders label {
+    display: grid;
+    gap: 6px;
+  }
+
+  .sliders span {
+    display: flex;
+    justify-content: space-between;
+    margin: 0;
+  }
+
+  output {
+    color: var(--lilac);
+    font-variant-numeric: tabular-nums;
+    margin-left: auto;
+  }
+
+  input[type='range'] {
+    width: 100%;
+    accent-color: var(--purple);
+    min-height: 36px;
+  }
+
+  .swatches {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .swatch {
+    position: relative;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    cursor: pointer;
+  }
+
+  .swatch span:first-of-type {
+    display: block;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    border: 2px solid rgba(0, 0, 0, 0.35);
+    box-shadow: 0 0 0 1px var(--line);
+  }
+
+  .swatch:has(input:checked) span:first-of-type {
+    box-shadow:
+      0 0 0 2px var(--night),
+      0 0 0 4px var(--lilac);
+  }
+
+  .swatch.custom input {
+    width: 36px;
+    height: 36px;
+    border: 0;
+    padding: 0;
+    border-radius: 50%;
+    background: conic-gradient(red, yellow, lime, cyan, blue, magenta, red);
+    cursor: pointer;
+  }
+
+  .swatch.custom input::-webkit-color-swatch-wrapper {
+    padding: 0;
+  }
+
+  .swatch.custom input::-webkit-color-swatch {
+    border: 0;
+    border-radius: 50%;
+    opacity: 0;
+  }
+
+  .swatch.custom input::-moz-color-swatch {
+    border: 0;
+    opacity: 0;
+  }
+
+  .toggle {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: 650;
+    min-height: 44px;
+    cursor: pointer;
+  }
+
+  .toggle input {
+    width: 20px;
+    height: 20px;
+    accent-color: var(--purple);
+  }
+
+  @media (max-width: 880px) {
+    .xh {
+      grid-template-columns: 1fr;
+    }
+    .stage {
+      border-right: 0;
+      border-bottom: 1px solid var(--line);
+      min-height: 320px;
+    }
+  }
+
+  @media (max-width: 420px) {
+    .styles {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 6px;
+    }
+    .style span {
+      font-size: 0.7rem;
+    }
+    .sliders {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

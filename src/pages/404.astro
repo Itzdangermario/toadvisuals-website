@@ -1,0 +1,96 @@
+---
+import Base from '../layouts/Base.astro';
+import Icon from '../components/Icon.astro';
+import PixelMascot from '../components/PixelMascot.astro';
+---
+<Base title="Page not found" description="This page does not exist." path="/404/" noindex>
+  <section class="nf">
+    <div class="wrap nf-grid">
+      <div class="art">
+        <PixelMascot size={240} />
+        <span class="code" aria-hidden="true">404</span>
+      </div>
+      <div class="copy">
+        <h1>This page doesn’t exist</h1>
+        <p class="lead">The link may be old, or the page has moved. Everything is still here, just somewhere else.</p>
+        <div class="actions">
+          <a class="btn btn-primary btn-lg" href="/">
+            <Icon name="home" size={20} />
+            Back to home
+          </a>
+          <a class="btn btn-ghost btn-lg" href="/downloads/">Downloads</a>
+        </div>
+        <nav aria-label="Popular pages" class="links">
+          <a href="/features/">Features</a>
+          <a href="/changelog/">Changelog</a>
+          <a href="/faq/">FAQ</a>
+          <a href="/community/">Community</a>
+        </nav>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .nf {
+    padding-block: clamp(56px, 10vw, 130px);
+  }
+  .nf-grid {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    gap: clamp(32px, 6vw, 80px);
+    align-items: center;
+  }
+  .art {
+    position: relative;
+    display: grid;
+    justify-items: center;
+  }
+  .code {
+    margin-top: 10px;
+    font-family: var(--font-display);
+    font-weight: 650;
+    font-size: clamp(3rem, 2rem + 4vw, 5.5rem);
+    line-height: 1;
+    letter-spacing: 0.04em;
+    color: transparent;
+    -webkit-text-stroke: 1.5px rgba(199, 125, 255, 0.55);
+  }
+  h1 {
+    font-size: clamp(2.2rem, 1.5rem + 3vw, 3.6rem);
+    margin-bottom: 16px;
+  }
+  .actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 30px;
+  }
+  .links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px 20px;
+    margin-top: 28px;
+  }
+  .links a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 40px;
+    font-weight: 650;
+  }
+  @media (max-width: 760px) {
+    .nf-grid {
+      grid-template-columns: 1fr;
+      text-align: left;
+    }
+    .art {
+      justify-items: start;
+    }
+    .art :global(.mascot) {
+      width: 160px;
+    }
+    .actions .btn {
+      flex: 1 1 100%;
+    }
+  }
+</style>

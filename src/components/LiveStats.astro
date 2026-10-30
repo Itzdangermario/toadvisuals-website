@@ -1,0 +1,195 @@
+---
+/**
+ * Live numbers from the mod's online list (Supabase, public read-only key):
+ * - playing now: players whose mod checked in during the last 11 minutes (the mod checks in every 5 minutes)
+ * - players: all players on the list
+ * - downloads: clicks on download buttons of this website (table download_stats, see supabase/website-stats.sql)
+ * Numbers that cannot be loaded are not shown. Nothing is ever made up.
+ */
+import { site } from '../data/site';
+interface Props { compact?: boolean }
+const { compact = false } = Astro.props;
+const enabled = !!site.stats.url && !!site.stats.key;
+---
+{
+  enabled && (
+    <dl class:list={['stats', { compact }]} data-stats data-url={site.stats.url} data-key={site.stats.key} aria-live="polite">
+      <div class="stat" data-stat="now" hidden>
+        <dt>
+          <span class="live" aria-hidden="true" />
+          Playing right now
+        </dt>
+        <dd data-value>–</dd>
+      </div>
+      <div class="stat" data-stat="downloads" hidden>
+        <dt>Downloads</dt>
+        <dd data-value>–</dd>
+      </div>
+      <div class="stat" data-stat="players" hidden>
+        <dt>Players so far</dt>
+        <dd data-value>–</dd>
+      </div>
+    </dl>
+  )
+}
+
+<script>
+  const NOW_MS = 11 * 60 * 1000;
+  const fmt = new Intl.NumberFormat('en-US');
+
+  function show(root: HTMLElement, key: string, value: number) {
+    const el = root.querySelector<HTMLElement>(`[data-stat="${key}"]`);
+    if (!el) return;
+    const out = el.querySelector<HTMLElement>('[data-value]')!;
+    const from = Number(out.dataset.n ?? 0);
+    out.dataset.n = String(value);
+    el.hidden = false;
+    root.classList.add('ready');
+    if (from === value && out.textContent !== '–') return;
+    // count up once, quickly (skipped with reduced motion)
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches || from > 0) {
+      out.textContent = fmt.format(value);
+      return;
+    }
+    const t0 = performance.now();
+    const step = (t: number) => {
+      const k = Math.min(1, (t - t0) / 700);
+      out.textContent = fmt.format(Math.round(value * (1 - Math.pow(1 - k, 3))));
+      if (k < 1) requestAnimationFrame(step);
+    };
+    requestAnimationFrame(step);
+  }
+
+  async function players(url: string, key: string) {
+    const rows: { player_uuid: string; updated_at: string }[] = [];
+    for (let from = 0; from < 200000; from += 1000) {
+      const r = await fetch(`${url}/rest/v1/player_cosmetics?select=player_uuid,updated_at`, {
+        headers: { apikey: key, 'Range-Unit': 'items', Range: `${from}-${from + 999}` },
+      });
+      if (!r.ok) throw new Error(String(r.status));
+      const page = await r.json();
+      rows.push(...page);
+      if (page.length < 1000) break;
+    }
+    const all = new Set<string>();
+    const now = new Set<string>();
+    const since = Date.now() - NOW_MS;
+    for (const row of rows) {
+      all.add(row.player_uuid);
+      if (Date.parse(row.updated_at) > since) now.add(row.player_uuid);
+    }
+    return { all: all.size, now: now.size };
+  }
+
+  async function downloads(url: string, key: string) {
+    const r = await fetch(`${url}/rest/v1/download_stats?select=downloads`, { headers: { apikey: key } });
+    if (!r.ok) throw new Error(String(r.status));
+    const rows: { downloads: number }[] = await r.json();
+    return rows.reduce((s, x) => s + Number(x.downloads || 0), 0);
+  }
+
+  async function refresh(root: HTMLElement) {
+    const { url, key } = root.dataset as { url: string; key: string };
+    const [p, d] = await Promise.allSettled([players(url, key), downloads(url, key)]);
+    if (p.status === 'fulfilled') {
+      show(root, 'now', p.value.now);
+      show(root, 'players', p.value.all);
+    }
+    if (d.status === 'fulfilled') show(root, 'downloads', d.value);
+  }
+
+  const roots = [...document.querySelectorAll<HTMLElement>('[data-stats]')];
+  roots.forEach((r) => refresh(r).catch(() => {}));
+  setInterval(() => document.visibilityState === 'visible' && roots.forEach((r) => refresh(r).catch(() => {})), 60_000);
+
+  // Count a click on a download button (once per file and browser session), then show it right away.
+  document.addEventListener('click', (e) => {
+    const a = (e.target as HTMLElement).closest<HTMLAnchorElement>('a[data-dl-version]');
+    const root = roots[0];
+    if (!a || !root) return;
+    const version = a.dataset.dlVersion!;
+    const mc = a.dataset.dlMc!;
+    const id = `tv-dl-${version}-${mc}`;
+    try {
+      if (sessionStorage.getItem(id)) return;
+      sessionStorage.setItem(id, '1');
+    } catch {
+      /* storage blocked: count anyway */
+    }
+    fetch(`${root.dataset.url}/rest/v1/rpc/count_download`, {
+      method: 'POST',
+      keepalive: true,
+      headers: { apikey: root.dataset.key!, 'Content-Type': 'application/json' },
+      body: JSON.stringify({ p_version: version, p_mc: mc }),
+    })
+      .then((r) => {
+        if (!r.ok) return;
+        roots.forEach((rt) => {
+          const v = rt.querySelector<HTMLElement>('[data-stat="downloads"] [data-value]');
+          if (v && v.dataset.n) show(rt, 'downloads', Number(v.dataset.n) + 1);
+        });
+      })
+      .catch(() => {});
+  });
+</script>
+
+<style>
+  .stats {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 14px 44px;
+    margin: 0;
+    min-height: 58px;
+  }
+
+  .stat {
+    display: grid;
+    gap: 2px;
+  }
+
+  .stat[hidden] {
+    display: none;
+  }
+
+  dt {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--muted);
+    font-size: 0.9rem;
+    font-weight: 650;
+  }
+
+  dd {
+    margin: 0;
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: clamp(1.8rem, 1.4rem + 1.4vw, 2.4rem);
+    line-height: 1.05;
+    font-variant-numeric: tabular-nums;
+    color: var(--ink);
+  }
+
+  .live {
+    position: relative;
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    background: #4ade80;
+    box-shadow: 0 0 0 0 rgba(74, 222, 128, 0.6);
+    animation: pulse 2s infinite;
+  }
+
+  @keyframes pulse {
+    70% {
+      box-shadow: 0 0 0 8px rgba(74, 222, 128, 0);
+    }
+    100% {
+      box-shadow: 0 0 0 0 rgba(74, 222, 128, 0);
+    }
+  }
+
+  .compact dd {
+    font-size: 1.5rem;
+  }
+</style>

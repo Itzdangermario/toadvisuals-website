@@ -1,0 +1,84 @@
+---
+import Base from '../layouts/Base.astro';
+import { legal, site } from '../data/site';
+const hasAddress = legal.name !== '' && legal.address.length > 0;
+---
+<Base title="Imprint (Impressum)" description="Legal notice (Impressum) and contact for toadvisuals.lol.">
+  <section class="page-hero">
+    <div class="glow" aria-hidden="true"></div>
+    <div class="wrap">
+      <h1 lang="de">Impressum</h1>
+      <p class="lead">Legal notice and contact.</p>
+    </div>
+  </section>
+
+  <div class="wrap body" lang="de">
+    <article class="prose">
+      {
+        hasAddress && (
+          <>
+            <h2>Angaben gemäß § 5 DDG</h2>
+            <p class="address">
+              {legal.name}
+              {legal.address.map((line) => (
+                <>
+                  <br />
+                  {line}
+                </>
+              ))}
+            </p>
+          </>
+        )
+      }
+
+      <h2>Kontakt</h2>
+      <p>
+        {legal.email && (
+          <>
+            E-Mail: <a href={`mailto:${legal.email}`}>{legal.email}</a>
+            <br />
+          </>
+        )}
+        {legal.phone && (
+          <>
+            Telefon: {legal.phone}
+            <br />
+          </>
+        )}
+        Discord: <a href={site.links.discord} target="_blank" rel="noopener">Toad’s Visuals Discord-Server</a>
+      </p>
+
+      <h2>Hinweis</h2>
+      <p>
+        Toad’s Visuals ist kein offizielles Minecraft-Produkt und steht in keiner Verbindung zu Mojang oder Microsoft.
+        Minecraft ist eine Marke von Mojang Synergies AB.
+      </p>
+      <p>
+        Für die Inhalte externer Links sind ausschließlich deren Betreiber verantwortlich. Zum Zeitpunkt der Verlinkung waren
+        keine Rechtsverstöße erkennbar; bei Bekanntwerden entfernen wir solche Links umgehend.
+      </p>
+      <p>Informationen zum Datenschutz findest du in der <a href="/privacy/">Datenschutzerklärung</a> (Englisch).</p>
+    </article>
+  </div>
+</Base>
+
+<style>
+  .body {
+    padding-bottom: clamp(64px, 9vw, 120px);
+  }
+
+  .prose h2 {
+    margin-top: 1.6em;
+  }
+
+  .prose h2:first-child {
+    margin-top: 0;
+  }
+
+  .address {
+    padding: 16px 20px;
+    border-left: 2px solid var(--purple);
+    background: rgba(167, 85, 255, 0.06);
+    border-radius: 0 12px 12px 0;
+  }
+</style>
