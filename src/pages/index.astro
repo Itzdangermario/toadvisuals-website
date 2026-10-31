@@ -6,7 +6,7 @@ import Playground from '../components/Playground.astro';
 import GalleryStrip from '../components/GalleryStrip.astro';
 import LiveStats from '../components/LiveStats.astro';
 import NextUpdate from '../components/NextUpdate.astro';
-import { latest, mcVersions } from '../lib/releases';
+import { latest, offeredMc, joinList } from '../lib/releases';
 import { site } from '../data/site';
 import { pvpModes } from '../data/features';
 
@@ -57,7 +57,7 @@ const highlights = [
           </a>
           <a class="btn btn-ghost btn-lg" href="/try/">Try it in your browser</a>
         </div>
-        <p class="meta">Free for Fabric, Minecraft {mcVersions.join(' and ')}</p>
+        <p class="meta">Free for Fabric, Minecraft {joinList(offeredMc)}</p>
       </div>
       <div class="hero-art">
         <PixelMascot size={330} />
@@ -135,7 +135,7 @@ const highlights = [
     <div class="wrap">
       <div class="section-head">
         <h2 id="updates-title">Updates</h2>
-        <p>Regular updates for Minecraft {mcVersions.join(' and ')}. Here is what's next.</p>
+        <p>Regular updates for Minecraft {joinList(offeredMc)}. Here is what's next.</p>
       </div>
       <NextUpdate />
     </div>
@@ -426,11 +426,12 @@ const highlights = [
     padding-top: clamp(16px, 3vw, 32px);
   }
 
+  /* mascot and text in the first row, one button per Minecraft version below (works for any number of versions) */
   .get-box {
     display: grid;
-    grid-template-columns: auto minmax(0, 1fr) auto;
+    grid-template-columns: auto minmax(0, 1fr);
     align-items: center;
-    gap: 28px;
+    gap: 22px 28px;
     padding: clamp(24px, 4vw, 40px);
   }
 
@@ -440,6 +441,7 @@ const highlights = [
   }
 
   .get-files {
+    grid-column: 1 / -1;
     display: flex;
     flex-wrap: wrap;
     align-items: center;

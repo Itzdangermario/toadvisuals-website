@@ -6,7 +6,8 @@ import changelog from '../data/changelog.json';
 
 /**
  * Downloads are found automatically: every .jar in public/downloads/<version>/ is a download of that version.
- * The Minecraft version is read from the file name (…mc1.21.11.jar, …+1.21.11.jar, …-26.2.jar).
+ * The Minecraft version is read from the file name (…mc1.21.11.jar, …+1.21.11.jar, …+26.3.jar). Every version
+ * that can appear must be listed in releases.json → "targets".
  * Files hosted elsewhere (Dropbox …) are listed in releases.json → "external". As soon as "external" has entries,
  * ONLY those are offered and every jar in public/downloads/ is ignored (and removed from dist by scripts/clean-dist.mjs).
  * Only the newest version is offered for download.
@@ -152,6 +153,13 @@ if (all.length === 0) throw new Error('No downloads found (public/downloads/<ver
 /** Only the newest version is offered. */
 export const latest = all[0];
 export const releases: Release[] = [latest];
+/** The Minecraft versions the newest release has files for, in the order of releases.json. */
+export const offeredMc: McVersion[] = latest.files.map((f) => f.mc);
+
+/** "a", "a and b", "a, b and c" */
+export function joinList(items: string[], word = 'and'): string {
+  return items.length <= 1 ? (items[0] ?? '') : `${items.slice(0, -1).join(', ')} ${word} ${items[items.length - 1]}`;
+}
 
 export function formatDate(iso: string | null): string {
   if (!iso) return '';

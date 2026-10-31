@@ -10,6 +10,11 @@
       "java": 25,
       "loader": "0.19.3",
       "fabricApi": "Fabric API for 26.2"
+    },
+    "26.3": {
+      "java": 25,
+      "loader": "0.19.3",
+      "fabricApi": "Fabric API for 26.3"
     }
   },
   "external": []
